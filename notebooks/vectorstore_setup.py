@@ -151,7 +151,18 @@ def split_text_add_video_metadata(cleaned_json_dict):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     chunks = text_splitter.split_text(cleaned_transcript)
 
-    chunked_documents = [Document(page_content=chunk, metadata=metadata) for chunk in chunks]
+    chunked_documents = []
+    for i, chunk in enumerate(chunks): # gets the index of each chunk in chunks
+        chunk_metadata = metadata.copy() # this copys the metadata to a new dictionary called chunk_metadata
+        chunk_metadata["chunk_id"] = i # this adds the index to the chunk_metadata dictionary 
+
+        doc = Document( # Document = object from LangChain, creates a structured document object for the vectorstore
+            page_content=chunk, # page content = text that will be embedded and stored in vector database
+            metadata=chunk_metadata # now metadata contains index, not embedded, stored alongside the text
+        )
+
+        chunked_documents.append(doc) # append the list with all the document objects
+
 
     return chunked_documents
 

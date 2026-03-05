@@ -70,6 +70,7 @@ The path is selected by `route_query()`: if a video is attached it always takes 
 - **LangChain** — document loading, text splitting, prompt templates, `RunnableWithMessageHistory` for conversation memory
 - **ChromaDB** — persistent vector storage and similarity search
 - **OpenCV** — video frame extraction and processing
+- **OpenAI Whisper API** — voice-to-text input for hands-free querying
 
 ## Key Design Decisions
 
@@ -110,7 +111,6 @@ fitness-form-coach/
 
 ## What's Next
 
-- Voice-to-text input (Whisper API)
 - Evaluation framework (retrieval quality + response grounding)
 - Streamlit frontend
 - More exercise types and expert sources
