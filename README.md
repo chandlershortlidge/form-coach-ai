@@ -1,6 +1,6 @@
 # Fitness Form Coach
 
-A RAG-powered AI coaching system that analyzes workout videos and provides personalized exercise form feedback grounded in expert fitness knowledge.
+A multimodal AI coaching system that analyzes workout videos and user queries using an agent-orchestrated pipeline combining video understanding, retrieval-augmented generation (RAG), and conversational memory.
 
 ## What It Does
 
@@ -72,6 +72,9 @@ The path is selected by `route_query()`: if a video is attached it always takes 
 - **OpenCV** — video frame extraction and processing
 - **OpenAI Whisper API** — voice-to-text input for hands-free querying
 
+## Evaluation
+- **LangSmith** - RAG baseline evaluated across correctness, latency (P50/P99), token usage, and cost
+
 ## Key Design Decisions
 
 - **Multi-frame analysis**: Rather than analyzing a single snapshot, the system passes multiple frames to GPT-5 so it can detect patterns across the movement (e.g., bar path, elbow flare throughout the rep).
@@ -111,9 +114,10 @@ fitness-form-coach/
 
 ## What's Next
 
-- Evaluation framework (retrieval quality + response grounding)
-- Streamlit frontend
-- More exercise types and expert sources
+- Expanded evaluation benchmarks using LangSmith experiments
+- Streamlit or FastAPI interface for real-time interaction
+- Expanded exercise dataset and expert sources
+- Fine-tuned retrieval strategies (chunking, top-k tuning)
 
 ## Author
 
