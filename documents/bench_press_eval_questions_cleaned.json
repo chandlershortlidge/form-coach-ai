@@ -1,0 +1,186 @@
+[
+  {
+    "user_query": "Where should I grip the bar on bench press?",
+    "answer": "Use a grip width that lets your wrists stay stacked over your elbows. For most people that will be around the rings or a few inches inside them, but the exact width depends on your build and goals."
+  },
+  {
+    "user_query": "Why shouldn't I use a wide grip on bench press?",
+    "answer": "An excessively wide grip can make shoulder stress worse and, especially when paired with elbow flare, can reduce safety and efficiency. Grip width should be individualized rather than pushed to an extreme."
+  },
+  {
+    "user_query": "Where should my elbows be during bench press?",
+    "answer": "Your elbows should be tucked at roughly a 45-degree angle, not flared out to the sides. They should stay under your wrists throughout the movement."
+  },
+  {
+    "user_query": "What happens if I flare my elbows out during bench press?",
+    "answer": "Flaring your elbows out places unwanted tension on your shoulders, reduces pressing power, and increases the risk of shoulder injury over time."
+  },
+  {
+    "user_query": "What does it mean to retract and depress my shoulder blades?",
+    "answer": "Retracting and depressing your shoulder blades means pulling them back together and down. This creates a stable base, keeps the tension in your chest rather than your shoulders, and gives you more pressing power."
+  },
+  {
+    "user_query": "Why do my shoulders hurt during bench press?",
+    "answer": "Shoulder pain during bench press is often caused by flaring your elbows too wide, using too wide of a grip, rolling your shoulders forward, or not keeping your shoulder blades retracted and depressed throughout the set."
+  },
+  {
+    "user_query": "What should my shoulder blades do during bench press?",
+    "answer": "Your shoulder blades should be retracted and depressed throughout the entire set. Do not unpack them when pressing the bar off the rack or during any rep."
+  },
+  {
+    "user_query": "What happens if I lose my shoulder blade position during bench press?",
+    "answer": "If your shoulder blades unpack, your back goes flat on the bench, you lose pushing power, and the exercise transfers more stress to your shoulders instead of your chest."
+  },
+  {
+    "user_query": "How do I reset my shoulder blades if they come unpacked mid-set?",
+    "answer": "Hold the weight above you and reset your shoulders by pulling your shoulder blades back together and down before continuing your reps."
+  },
+  {
+    "user_query": "Where should the bar touch on my chest during bench press?",
+    "answer": "The touch point depends on your build and grip width, but for most people it will be somewhere from the top ab area to the nipple line, often around the lower or middle sternum. The key is keeping your forearms vertical and your elbows stacked well under the bar."
+  },
+  {
+    "user_query": "Should I bounce the bar off my chest?",
+    "answer": "No. Lower the bar under control and touch the chest without bouncing. A pause is optional for general training and required in powerlifting competition, but you should not use a rebound off the chest."
+  },
+  {
+    "user_query": "Where should my feet be during bench press?",
+    "answer": "Your feet should be firmly planted on the floor throughout the set."
+  },
+  {
+    "user_query": "Why is foot position important during bench press?",
+    "answer": "Firmly planted feet create a stable foundation for pressing. If your feet are moving around, you lose stability, your core loosens, and you cannot press as effectively or safely."
+  },
+  {
+    "user_query": "What should my core do during bench press?",
+    "answer": "Your core should be braced tightly throughout the movement. Take a breath through your nose and brace your core as hard as you can before pressing. If your core loosens up, reset before continuing."
+  },
+  {
+    "user_query": "Should I arch my back during bench press?",
+    "answer": "Yes, you should have an arch in your back. As you push your knees out with your feet planted, arch your back, brace your core, and squeeze your glutes. This creates a solid foundation for pressing."
+  },
+  {
+    "user_query": "What role do the glutes play in bench press?",
+    "answer": "Squeezing your glutes helps maintain a tight, stable position on the bench. It supports your arch and contributes to the solid foundation you need for pressing heavy weight."
+  },
+  {
+    "user_query": "What should I do if the bench is slippery?",
+    "answer": "You can wrap bungee cords around the seat of the bench. This helps your butt stick to the bench so you don't slide forward during heavy presses."
+  },
+  {
+    "user_query": "What muscles does the bench press work?",
+    "answer": "The bench press primarily works the pectoralis major (chest), anterior deltoids (front shoulders), and triceps."
+  },
+  {
+    "user_query": "Should I use a thumbless grip on bench press?",
+    "answer": "No. A full grip with the thumb wrapped around the bar is recommended for bench press. A thumbless grip risks the bar slipping out of your hands and falling onto your chest, which is extremely dangerous."
+  },
+  {
+    "user_query": "How wide should my grip be on bench press?",
+    "answer": "Grip width is individual. A good starting point is a width that keeps your wrists over your elbows, with many lifters landing around the rings or a few inches inside them. Avoid exaggeratedly narrow or wide grips."
+  },
+  {
+    "user_query": "What is the most common bench press mistake?",
+    "answer": "Common mistakes include flaring elbows too wide, not keeping shoulder blades retracted and depressed, having loose feet and core, rolling shoulders forward, and using too wide of a grip."
+  },
+  {
+    "user_query": "What should my forearms look like during bench press?", 
+    "answer": "Your forearms should stay vertical with your elbows under your wrists throughout the movement. This ensures efficient force transfer and protects your shoulders."
+  },
+  {
+    "user_query": "What does rolling your shoulders forward during bench press cause?",
+    "answer": "Rolling your shoulders forward causes you to lose tightness and increases the chance of shoulder injury. It often goes hand in hand with flaring elbows and unpacking shoulder blades."
+  },
+  {
+    "user_query": "How should I use my lats during bench press?",
+    "answer": "Use cues like trying to bend the bar into a U or rip it apart as you lower it. That helps you tuck your elbows, engage your upper back and lats, and stay tight through the descent."
+  },
+  {
+    "user_query": "What is the proper bench press setup?",
+    "answer": "Lie on the bench, retract and depress your shoulder blades, plant your feet firmly, push your knees out, arch your back, brace your core, squeeze your glutes, and grip the bar just outside shoulder width."
+  },
+  {
+    "user_query": "Should my butt stay on the bench during bench press?",
+    "answer": "Yes, your glutes should stay on the bench throughout the movement. If the bench is slippery and your butt slides, use bungee cords around the seat for grip."
+  },
+  {
+    "user_query": "What should I do if I feel bench press more in my shoulders than my chest?",
+    "answer": "This usually means your shoulder blades are not retracted and depressed. Hold the weight above you, reset your shoulder blade position, and then continue. Also check that your grip isn't too wide and your elbows aren't flaring."
+  },
+  {
+    "user_query": "How should I breathe during bench press?",
+    "answer": "Take a breath through your nose and brace your core as hard as you can before pressing. This increases intra-abdominal pressure and creates a more stable foundation."
+  },
+  {
+    "user_query": "What happens if my core is loose during bench press?",
+    "answer": "A loose core means you don't have a solid foundation to press from. You'll be less stable, press less weight, and increase your risk of injury. If your core loosens, reset before continuing."
+  },
+  {
+    "user_query": "How do I unrack the bar without losing my shoulder blade position?",
+    "answer": "Don't think about lifting the bar off the uprights — instead, drive your shoulder blades back against the bench so hard that the bar comes off. Take a deep breath, brace, and then slowly and in a controlled fashion pull the bar off the uprights."
+  },
+  {
+    "user_query": "I'm new to bench press, where should I start?",
+    "answer": "Start with an empty bar and use a spotter or a power rack. Focus on learning the setup and form before adding weight. Lifting is a skill — the more you practice it correctly, the better you'll get."
+  },
+  {
+    "user_query": "Can bench press cause shoulder injury?",
+    "answer": "Yes, particularly if you use too wide of a grip, flare your elbows out, roll your shoulders forward, or unpack your shoulder blades. These form errors place excessive stress on the shoulders over time."
+  },
+  {
+    "user_query": "What is the difference between bench press grip and overhead press grip?",
+    "answer": "Bench press uses a just-outside-shoulder-width grip with thumbs wrapped around the bar. Overhead press also uses a slightly wider than shoulder-width grip with hands just outside the shoulders, but a thumbless grip can be used once you're comfortable, as long as your wrists are stacked."
+  },
+  {
+    "user_query": "What is the right bar path for bench press?",
+    "answer": "The bar should come down under control to a touch point on the chest, then press back up and slightly back toward the shoulders. In practice, most lifters use a back-and-up or upside-down J-shaped path rather than a perfectly straight line."
+  },
+  {
+    "user_query": "How do I know if my grip is too wide on bench press?",
+    "answer": "If your elbows flare out to the sides, you can't keep your lats tight, or you feel excessive strain in your shoulders, your grip is likely too wide. Your elbows should be able to stay under your wrists."
+  },
+  {
+    "user_query": "What muscles does bench press work?", 
+    "answer": "The bench press primarily works the pec major (chest), triceps, and front deltoids. The lats also play a role at the bottom of the press. It's not just a chest movement — when done correctly, it incorporates multiple muscle groups including the back."
+  },
+  {
+    "user_query": "Should I do touch-and-go reps on bench press?",
+    "answer": "A controlled touch-and-go rep can be fine for general or bodybuilding training as long as the bar only taps the chest and stays controlled. What you want to avoid is turning touch-and-go into a bounce or using momentum to start the rep."
+  },
+  {
+    "user_query": "How do I set up properly for bench press?",
+    "answer": "Plant your feet firmly on the floor, arch your back, brace your core by breathing in through your nose and pressing out, squeeze your glutes, and retract and depress your shoulder blades."
+  },
+  {
+    "user_query": "What do tricpes do during bench press?",
+    "answer": "The triceps perform elbow extension, which is straightening your arms as you press the bar up. They are one of the primary movers along with the chest and front deltoids."
+  },
+  {
+    "user_query": "What does bad form look like for bench press?", 
+    "answer": "Bad form on bench press includes: feet moving around instead of staying planted, core loosening up, shoulder blades unpacking and back going flat, bouncing the bar off your chest, not breathing and bracing properly, and flaring your elbows too wide or over-tucking them."
+  },
+  {
+    "user_query": "Is bench press a good exercise for chest development?",
+    "answer": "Yes, the bench press is a fundamental chest exercise. With proper form — shoulder blades retracted and depressed, elbows under wrists, just-outside-shoulder-width grip — you can maximize chest activation."
+  },
+  {
+    "user_query": "What does it mean to have floppy feet during bench press?",
+    "answer": "Floppy feet means your feet are not firmly planted and are moving around during the set. This creates instability, loosens your core, and reduces your pressing effectiveness and safety."
+  },
+  {
+    "user_query": "Should I squeeze my glutes during bench press?",
+    "answer": "Yes, squeezing your glutes helps maintain a tight, stable position and supports your arch on the bench, creating a better foundation for pressing."
+  },
+  {
+    "user_query": "What is the risk of using a thumbless grip on bench press?",
+    "answer": "A thumbless grip on bench press is not recommended because the bar can slip out of your hands and fall on you. Use a full grip with thumbs wrapped around the bar."
+  },
+  {
+    "user_query": "How should I lower the bar during bench press?",
+    "answer": "Lower the bar with control to your chest, keeping your elbows at roughly 45 degrees and under your wrists. Do not let the bar drop or bounce off your chest."
+  },
+  {
+    "user_query": "Why do I lose power during bench press?",
+    "answer": "Common reasons include losing shoulder blade position, having a loose core, feet not planted firmly, flaring elbows too wide, or using your shoulders instead of your chest to press."
+  }
+]
