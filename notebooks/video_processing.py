@@ -42,12 +42,15 @@ def extract_video_frames(filepath_in, max_seconds, frame_count):
     frames = []
     current_frame = 0
     cap = cv2.VideoCapture(filepath_in) # opens the video like open('file.txt'). cap is now the video object 
-    native_fps = cap.get(cv2.CAP_PROP_FPS) # cap prop fps gets the native frame rate of the recording 
-    interval_seconds = max_seconds / frame_count 
+    native_fps = cap.get(cv2.CAP_PROP_FPS) # cap prop fps gets the native frame rate of the recording
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    actual_duration = total_frames / native_fps
+    effective_seconds = min(max_seconds, actual_duration)
+    interval_seconds = effective_seconds / frame_count 
     # ex: 0.66 interval secionds = 10 max seconds / 15 desired frames
     frame_interval = interval_seconds * native_fps 
     # 20  = 0.66 * 30 native fps 
-    max_frames = int(native_fps * max_seconds)
+    max_frames = int(native_fps * effective_seconds)
     # calculate the max frames in a video. eg: 30fps * 10 seconds = 300 max frames
     targets = [int(i * frame_interval) for i in range(frame_count)]
     while current_frame < max_frames:
@@ -60,7 +63,7 @@ def extract_video_frames(filepath_in, max_seconds, frame_count):
         current_frame += 1
     cap.release() # closes the tile
     
-    print(f"Frames processed: {frame_count}, ({max_seconds}s cap)")
+    print(f"Frames processed: {frame_count}, ({effective_seconds}s cap)")
     
     return frames
 
