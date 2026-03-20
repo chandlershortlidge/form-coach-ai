@@ -27,3 +27,19 @@ export async function analyze({ sessionId, userQuery, userVideo, userAudio }) {
   console.log('[api] parsed JSON:', data);
   return data;
 }
+
+export async function preview({ sessionId, userVideo }) {
+  const form = new FormData();
+  form.append('user_video', userVideo);
+
+  const url = new URL(`${BASE_URL}/preview`);
+  url.searchParams.set('session_id', sessionId);
+
+  const res = await fetch(url, {
+    method: 'POST',
+    body: form,
+  });
+
+  if (!res.ok) throw new Error(`Preview error: ${res.status}`);
+  return res.json();
+}

@@ -60,33 +60,63 @@ function TypingIndicator() {
   );
 }
 
-const VIDEO_STEPS = [
-  { delay: 0, text: 'Watching your video...' },
-  { delay: 5000, text: 'Okay, let me see that again...' },
-  { delay: 12000, text: 'Checking your setup and positioning...' },
-  { delay: 22000, text: 'Looking at your bar path and tempo...' },
-  { delay: 35000, text: 'Spotted a few things to work on...' },
-  { delay: 50000, text: 'Putting your coaching notes together...' },
+const CHECKLIST_PREFIXES = [
+  'Checking your',
+  'Looking at your',
+  'Analyzing your',
+  'Now examining your',
+  'Reviewing your',
 ];
 
-function VideoLoadingIndicator() {
+function buildVideoSteps(previewData) {
+  const steps = ['Watching your video...'];
+  if (!previewData) return steps;
+
+  const { exercise, checklist } = previewData;
+  const cleanExercise = exercise.replace(/\*+/g, '').toLowerCase();
+  steps.push(`Nice, a ${cleanExercise}! Let me take a closer look...`);
+
+  checklist.forEach((item, i) => {
+    const lowerItem = item.toLowerCase();
+    const prefix = CHECKLIST_PREFIXES[i % CHECKLIST_PREFIXES.length];
+    steps.push(`${prefix} ${lowerItem}...`);
+  });
+
+  steps.push('Putting your coaching notes together...');
+  return steps;
+}
+
+function VideoLoadingIndicator({ previewData }) {
   const [visibleCount, setVisibleCount] = useState(1);
+  const stepsRef = useRef(['Watching your video...']);
 
   useEffect(() => {
-    const timers = VIDEO_STEPS.slice(1).map((step, i) =>
-      setTimeout(() => setVisibleCount(i + 2), step.delay)
-    );
-    return () => timers.forEach(clearTimeout);
-  }, []);
+    if (previewData) {
+      stepsRef.current = buildVideoSteps(previewData);
+      setVisibleCount(2);
+    }
+  }, [previewData]);
+
+  useEffect(() => {
+    if (visibleCount < 2) return;
+    if (visibleCount >= stepsRef.current.length) return;
+
+    const timer = setTimeout(() => {
+      setVisibleCount((c) => c + 1);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [visibleCount]);
+
+  const steps = stepsRef.current;
 
   return (
     <div className="video-loading">
-      {VIDEO_STEPS.slice(0, visibleCount).map((step, i) => {
+      {steps.slice(0, visibleCount).map((text, i) => {
         const isActive = i === visibleCount - 1;
         return (
           <div key={i} className={`video-loading-step${isActive ? '' : ' completed'} fade-in`}>
             {isActive ? <span className="step-spinner" /> : <span className="step-check">✓</span>}
-            <span className="step-text">{step.text}</span>
+            <span className="step-text">{text}</span>
           </div>
         );
       })}
@@ -94,7 +124,7 @@ function VideoLoadingIndicator() {
   );
 }
 
-export default function ChatPanel({ messages, isLoading, loadingType }) {
+export default function ChatPanel({ messages, isLoading, loadingType, previewData }) {
   const bottomRef = useRef(null);
 
   useEffect(() => {
@@ -126,7 +156,7 @@ export default function ChatPanel({ messages, isLoading, loadingType }) {
       })}
       {isLoading && (
         <div className="message-row coach-row">
-          {loadingType === 'video' ? <VideoLoadingIndicator /> : <TypingIndicator />}
+          {loadingType === 'video' ? <VideoLoadingIndicator previewData={previewData} /> : <TypingIndicator />}
         </div>
       )}
       <div ref={bottomRef} />
