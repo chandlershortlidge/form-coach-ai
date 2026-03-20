@@ -9,20 +9,31 @@ const sessionId = getSessionId();
 export default function App() {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingType, setLoadingType] = useState(null);
 
   const addMessage = useCallback((msg) => {
     setMessages((prev) => [...prev, msg]);
   }, []);
 
-  async function sendToBackend(payload) {
+  const updateMessage = useCallback((index, updates) => {
+    setMessages((prev) => prev.map((m, i) => (i === index ? { ...m, ...updates } : m)));
+  }, []);
+
+  async function sendToBackend(payload, userMsgIndex, type = 'text') {
     setIsLoading(true);
+    setLoadingType(type);
     try {
       const data = await analyze({ sessionId, ...payload });
+      if (data.transcription && userMsgIndex != null) {
+        updateMessage(userMsgIndex, { text: `🎙️ ${data.transcription}` });
+      }
       addMessage({ role: 'coach', text: data.response });
-    } catch {
+    } catch (err) {
+      console.error('[sendToBackend] error:', err);
       addMessage({ role: 'error', text: 'Something went wrong. Please try again.' });
     } finally {
       setIsLoading(false);
+      setLoadingType(null);
     }
   }
 
@@ -32,23 +43,27 @@ export default function App() {
   }
 
   function handleSendVideo(file, textInput) {
-    addMessage({ role: 'user', text: `📎 ${file.name}` });
+    const display = textInput
+      ? `📎 ${file.name}\n${textInput}`
+      : `📎 ${file.name}`;
+    addMessage({ role: 'user', text: display });
     sendToBackend({
       userVideo: file,
       userQuery: textInput || 'Analyze my form',
-    });
+    }, undefined, 'video');
   }
 
   function handleSendAudio(blob) {
+    const idx = messages.length;
     addMessage({ role: 'user', text: '🎙️ Voice message' });
-    sendToBackend({ userAudio: blob });
+    sendToBackend({ userAudio: blob }, idx);
   }
 
   return (
     <div className="app">
       <h1 className="app-title">Fitness Form Coach</h1>
       <div className="chat-panel">
-        <ChatPanel messages={messages} isLoading={isLoading} />
+        <ChatPanel messages={messages} isLoading={isLoading} loadingType={loadingType} />
         <InputBar
           onSendText={handleSendText}
           onSendVideo={handleSendVideo}

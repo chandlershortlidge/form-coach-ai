@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function parseCoachResponse(text) {
   if (!text) return [];
@@ -60,7 +60,41 @@ function TypingIndicator() {
   );
 }
 
-export default function ChatPanel({ messages, isLoading }) {
+const VIDEO_STEPS = [
+  { delay: 0, text: 'Watching your video...' },
+  { delay: 5000, text: 'Okay, let me see that again...' },
+  { delay: 12000, text: 'Checking your setup and positioning...' },
+  { delay: 22000, text: 'Looking at your bar path and tempo...' },
+  { delay: 35000, text: 'Spotted a few things to work on...' },
+  { delay: 50000, text: 'Putting your coaching notes together...' },
+];
+
+function VideoLoadingIndicator() {
+  const [visibleCount, setVisibleCount] = useState(1);
+
+  useEffect(() => {
+    const timers = VIDEO_STEPS.slice(1).map((step, i) =>
+      setTimeout(() => setVisibleCount(i + 2), step.delay)
+    );
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
+  return (
+    <div className="video-loading">
+      {VIDEO_STEPS.slice(0, visibleCount).map((step, i) => {
+        const isActive = i === visibleCount - 1;
+        return (
+          <div key={i} className={`video-loading-step${isActive ? '' : ' completed'} fade-in`}>
+            {isActive ? <span className="step-spinner" /> : <span className="step-check">✓</span>}
+            <span className="step-text">{step.text}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export default function ChatPanel({ messages, isLoading, loadingType }) {
   const bottomRef = useRef(null);
 
   useEffect(() => {
@@ -92,7 +126,7 @@ export default function ChatPanel({ messages, isLoading }) {
       })}
       {isLoading && (
         <div className="message-row coach-row">
-          <TypingIndicator />
+          {loadingType === 'video' ? <VideoLoadingIndicator /> : <TypingIndicator />}
         </div>
       )}
       <div ref={bottomRef} />
