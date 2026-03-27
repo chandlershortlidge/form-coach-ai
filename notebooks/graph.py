@@ -5,15 +5,22 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-from chat_memory import get_chat_history
+if __package__:
+    from .chat_memory import get_chat_history
+    from .video_processing import analyze_video
+else:
+    from chat_memory import get_chat_history
+    from video_processing import analyze_video
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.messages import HumanMessage
-from video_processing import analyze_video
-from vectorstore_setup import clean_classification_text
-from langchain_chroma import Chroma
+try:
+    from langchain_chroma import Chroma
+except ModuleNotFoundError:
+    from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
 from langgraph.graph import StateGraph, START, END
+import re
 
 load_dotenv(dotenv_path="/Users/chandlershortlidge/Desktop/Ironhack/fitness-form-coach/.env")
 api_key = os.getenv("OPENAI_API_KEY")
@@ -28,6 +35,12 @@ os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGSMITH_API_KEY")
 # Whisper speach to text 
 from openai import OpenAI
 client = OpenAI()
+
+
+def clean_classification_text(r):
+    create_string = r.content
+    response_cleaned = re.sub(r"[^a-zA-Z]", " ", create_string)
+    return response_cleaned
 
 
 router_prompt = ChatPromptTemplate.from_messages([
@@ -146,7 +159,7 @@ def video_classification_node(state: GraphState):
 
     classified_keywords = clean_classification_text(response)
 
-    return {"classified_keywords": classified_keywords}
+    return {"classified_keywords": classified_keywords, "classification_raw": response.content.strip()}
 
 
 def vector_db_node(state: GraphState):
@@ -193,16 +206,14 @@ def response_generator(state: GraphState):
     # BEHAVIOR INSTRUCTIONS
     1. Tone
     - You're eager and excited to help 
-    2. How to analyze
-    - Your break down analysis into four sections
-        a. What looks good
-             1 - 2 points
-        b. Main fixes
-             - 2 to 4 most important points. Discuss only what you can clearly see.
-        c. Mental cues
-             - a brief list of mental cues the lifter can easily remember during their lift
-        d. Closing remark 
-             - Closing remark should always reinforce what looks good offer encouraging remarks
+   2. How to analyze
+    - Break down your analysis into three sections
+        What looks good
+             - 1 to 2 points
+        Main fixes
+             - Cover all significant issues you observe
+        Mental cues
+             - A brief list of mental cues the lifter can easily remember during their lift
 
     # ANSWER CONTEXT
     Use ONLY the following context when answering a user: 
@@ -338,5 +349,3 @@ def transcribe_audio(audio_path):
 
     return transcription.text
     
-
-

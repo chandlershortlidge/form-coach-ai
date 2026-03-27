@@ -68,11 +68,22 @@ const CHECKLIST_PREFIXES = [
   'Reviewing your',
 ];
 
+function parseClassificationRaw(raw) {
+  const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+  const exercise = lines[0] || 'Unknown exercise';
+  const checklist = [];
+  for (const line of lines.slice(1)) {
+    const item = line.replace(/^\d+[.)]\s*/, '');
+    if (item) checklist.push(item);
+  }
+  return { exercise, checklist };
+}
+
 function buildVideoSteps(previewData) {
   const steps = ['Watching your video...'];
   if (!previewData) return steps;
 
-  const { exercise, checklist } = previewData;
+  const { exercise, checklist } = parseClassificationRaw(previewData);
   const cleanExercise = exercise.replace(/\*+/g, '').toLowerCase();
   steps.push(`Nice, a ${cleanExercise}! Let me take a closer look...`);
 

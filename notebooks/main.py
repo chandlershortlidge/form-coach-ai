@@ -1,9 +1,20 @@
-from fastapi import FastAPI, File, UploadFile, Form
+from fastapi import FastAPI, UploadFile, Form
+from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
-from graph import app as graph_app, transcribe_audio
-from video_processing import analyze_video
-from langchain_openai import ChatOpenAI
-import re
+if __package__:
+    from .graph import (
+        app as graph_app, transcribe_audio,
+        video_encoder_node, video_classification_node,
+        vector_db_node, response_generator,
+    )
+else:
+    from graph import (
+        app as graph_app, transcribe_audio,
+        video_encoder_node, video_classification_node,
+        vector_db_node, response_generator,
+    )
+import asyncio
+import json
 import tempfile
 import os
 
@@ -38,7 +49,7 @@ async def analyze(session_id: str, user_query: str = Form(None), user_video: Upl
             user_query = transcribe_audio(audio_path)
             transcription = user_query
             os.remove(audio_path)
-    
+
     # 2. if video, save it
 
     video_path = None
@@ -48,71 +59,56 @@ async def analyze(session_id: str, user_query: str = Form(None), user_video: Upl
             tmp.write(await user_video.read())
             video_path = tmp.name
 
+    async def event_stream():
+        nonlocal user_query
 
-    #3. invoke the graph
+        if video_path:
+            # Step 1: Encode video frames
+            yield f"data: {json.dumps({'type': 'status', 'message': 'Watching your video...'})}\n\n"
 
-    result = graph_app.invoke({
-        "session_id": session_id,
-        "user_query": user_query,
-        "user_video": video_path or ""
-    })
-    
-    #4. clean up 
+            encoder_result = await asyncio.to_thread(video_encoder_node, {"user_video": video_path})
 
-    if video_path:
-        os.remove(video_path)
-    print(result["response"])
+            # Step 2: Classify exercise
+            classification_result = await asyncio.to_thread(
+                video_classification_node,
+                {"classification_image": encoder_result["classification_image"]},
+            )
 
-    return {"response": result["response"], "transcription": transcription}
+            # Send raw classification text to frontend for display
+            yield f"data: {json.dumps({'type': 'preview', 'classification_raw': classification_result.get('classification_raw', '')})}\n\n"
 
+            # Step 3: Retrieval + response generation
+            yield f"data: {json.dumps({'type': 'status', 'message': 'Putting your coaching notes together...'})}\n\n"
 
-@app.post("/preview")
-async def preview(session_id: str, user_video: UploadFile = File(...)):
-    # 1. Save video to temp file
-    suffix = os.path.splitext(user_video.filename)[1]
-    with tempfile.NamedTemporaryFile(suffix=suffix, delete=False) as tmp:
-        tmp.write(await user_video.read())
-        video_path = tmp.name
+            state = {
+                "session_id": session_id,
+                "user_query": user_query or "Analyze my form",
+                "user_video": video_path,
+                "classified_keywords": classification_result["classified_keywords"],
+                "encoded_images": encoder_result["encoded_images"],
+                "classification_image": encoder_result["classification_image"],
+            }
+            retrieval_result = await asyncio.to_thread(vector_db_node, state)
+            state = {**state, **retrieval_result}
+            response_result = await asyncio.to_thread(response_generator, state)
+            state = {**state, **response_result}
 
-    # 2. Extract frames and get the first frame for classification
-    frames = analyze_video(filepath_in=video_path, frame_count=1, max_seconds=10)
-    classification_image = frames[0]
+            if video_path:
+                os.remove(video_path)
 
-    # 3. Run GPT-4o classification on first frame
-    router_llm = ChatOpenAI(model='gpt-4o')
-    response = router_llm.invoke([
-        {"role": "user", "content": [
-            {"type": "text", "text": """Your job is to analyze images of users working out for proper form, and list the key checkpoints of their to body evaluate.
-    Give me ONLY the bodypart checkpoints. Do NOT include evaluation suggestions. Do NOT include an intro sentence.
-    Output format should be exactly the example below.
-    **Example**
-    Overhead press
+            yield f"data: {json.dumps({'type': 'response', 'response': state['response'], 'transcription': transcription})}\n\n"
 
-    1. Feet & base
-    2. Glutes & legs
-    3. Core & Ribcage
-    4. Shoulder position
-    5. Bar path
-    6. Head & Neck
-    7. Lockout position
-    8. Tempo and control
-    """},
-            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{classification_image}"}}
-        ]}
-    ])
+        else:
+            # Text-only or audio path — run the full graph
+            result = await asyncio.to_thread(
+                graph_app.invoke,
+                {"session_id": session_id, "user_query": user_query, "user_video": ""},
+            )
 
-    # 4. Parse response into exercise name + checklist
-    raw_text = response.content.strip()
-    lines = [line.strip() for line in raw_text.split('\n') if line.strip()]
+            yield f"data: {json.dumps({'type': 'response', 'response': result['response'], 'transcription': transcription})}\n\n"
 
-    exercise = lines[0] if lines else "Unknown exercise"
-    checklist = []
-    for line in lines[1:]:
-        item = re.sub(r'^\d+[\.\)]\s*', '', line)
-        if item:
-            checklist.append(item)
-
-    # 5. Clean up
-    os.remove(video_path)
-
-    return {"exercise": exercise, "checklist": checklist}
+    return StreamingResponse(
+        event_stream(),
+        media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
+    )

@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:8000';
 
-export async function analyze({ sessionId, userQuery, userVideo, userAudio }) {
+export async function analyze({ sessionId, userQuery, userVideo, userAudio, onStatus, onPreview, onResponse }) {
   const form = new FormData();
 
   if (userQuery) form.append('user_query', userQuery);
@@ -15,31 +15,34 @@ export async function analyze({ sessionId, userQuery, userVideo, userAudio }) {
     body: form,
   });
 
-  console.log('[api] response status:', res.status, 'ok:', res.ok);
-
   if (!res.ok) {
     const text = await res.text();
     console.error('[api] error body:', text);
     throw new Error(`Server error: ${res.status}`);
   }
 
-  const data = await res.json();
-  console.log('[api] parsed JSON:', data);
-  return data;
-}
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
 
-export async function preview({ sessionId, userVideo }) {
-  const form = new FormData();
-  form.append('user_video', userVideo);
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
 
-  const url = new URL(`${BASE_URL}/preview`);
-  url.searchParams.set('session_id', sessionId);
+    const text = decoder.decode(value);
+    const lines = text.split('\n').filter(line => line.startsWith('data: '));
 
-  const res = await fetch(url, {
-    method: 'POST',
-    body: form,
-  });
+    for (const line of lines) {
+      const data = JSON.parse(line.slice(6));
 
-  if (!res.ok) throw new Error(`Preview error: ${res.status}`);
-  return res.json();
+      if (data.type === 'status' && onStatus) {
+        onStatus(data.message);
+      }
+      if (data.type === 'preview' && onPreview) {
+        onPreview(data.classification_raw);
+      }
+      if (data.type === 'response' && onResponse) {
+        onResponse(data.response, data.transcription);
+      }
+    }
+  }
 }

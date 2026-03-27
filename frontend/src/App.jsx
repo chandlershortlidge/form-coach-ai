@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import ChatPanel from './components/ChatPanel';
 import InputBar from './components/InputBar';
-import { analyze, preview } from './utils/api';
+import { analyze } from './utils/api';
 import { getSessionId } from './utils/session';
 
 const sessionId = getSessionId();
@@ -24,11 +24,16 @@ export default function App() {
     setIsLoading(true);
     setLoadingType(type);
     try {
-      const data = await analyze({ sessionId, ...payload });
-      if (data.transcription && userMsgIndex != null) {
-        updateMessage(userMsgIndex, { text: `🎙️ ${data.transcription}` });
-      }
-      addMessage({ role: 'coach', text: data.response });
+      await analyze({
+        sessionId,
+        ...payload,
+        onResponse(response, transcription) {
+          if (transcription && userMsgIndex != null) {
+            updateMessage(userMsgIndex, { text: `🎙️ ${transcription}` });
+          }
+          addMessage({ role: 'coach', text: response });
+        },
+      });
     } catch (err) {
       console.error('[sendToBackend] error:', err);
       addMessage({ role: 'error', text: 'Something went wrong. Please try again.' });
@@ -52,27 +57,23 @@ export default function App() {
     setLoadingType('video');
     setPreviewData(null);
 
-    // Fire preview as fire-and-forget — don't block on it
-    let previewStale = false;
-    preview({ sessionId, userVideo: file })
-      .then((data) => {
-        if (!previewStale) {
-          console.log('[preview] result:', data);
-          setPreviewData(data);
-        }
-      })
-      .catch((err) => console.error('[preview] error:', err));
-
     try {
-      const data = await analyze({
+      await analyze({
         sessionId,
         userVideo: file,
         userQuery: textInput || 'Analyze my form',
+        onStatus(message) {
+          console.log('[sse] status:', message);
+        },
+        onPreview(classifiedKeywords) {
+          console.log('[sse] preview:', classifiedKeywords);
+          setPreviewData(classifiedKeywords);
+        },
+        onResponse(response) {
+          addMessage({ role: 'coach', text: response });
+        },
       });
-      previewStale = true;
-      addMessage({ role: 'coach', text: data.response });
     } catch (err) {
-      previewStale = true;
       console.error('[sendToBackend] error:', err);
       addMessage({ role: 'error', text: 'Something went wrong. Please try again.' });
     } finally {
