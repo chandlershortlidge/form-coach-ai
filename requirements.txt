@@ -31,6 +31,7 @@ tiktoken>=0.5.0
 # API & Environment
 python-dotenv>=1.0.0
 requests>=2.31.0
+python-multipart>=0.0.9
 
 # Testing
 pytest>=7.4.0
