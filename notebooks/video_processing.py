@@ -14,7 +14,8 @@ def create_video_name_and_save_to_files(filepath_in, frames):
     split_text = basename.split(".") # splits basename into list
     video_name = split_text[0] # returns first item on that list
     for i, frame in enumerate(frames):
-        cv2.imwrite(f"/Users/chandlershortlidge/Desktop/Ironhack/fitness-form-coach/data/processed/processed-images/{video_name}_{i}.jpg", frame)
+        cv2.imwrite(f"/Users/chandlershortlidge/Desktop/Ironhack/fitness-form-coach/data/processed/processed-images/{video_name}_{i}.jpg", frame) 
+        # cv2.imwrite is where the frame gets saved to disk
     print(f"Saved to processed-images/{video_name}")
     print("Video name:", video_name)
     return video_name
@@ -85,16 +86,4 @@ def base_encoder(filepath_in):
         # print or use base64 string as needed
         return base64_string
 
-
-
-def analyze_video(filepath_in, max_seconds, frame_count):
-    frames = extract_video_frames(filepath_in, max_seconds, frame_count)
-    video_name = create_video_name_and_save_to_files(filepath_in, frames)
-    encoded_frames = []
-    for i in range(frame_count):
-        filepath = f"/Users/chandlershortlidge/Desktop/Ironhack/fitness-form-coach/data/processed/processed-images/{video_name}_{i}.jpg"
-        encoded = base_encoder(filepath)
-        encoded_frames.append(encoded)
-
-    return encoded_frames
 
