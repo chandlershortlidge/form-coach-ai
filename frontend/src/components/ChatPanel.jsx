@@ -136,31 +136,39 @@ function VideoLoadingIndicator({ previewData }) {
 }
 
 export default function ChatPanel({ messages, isLoading, loadingType, previewData }) {
-  const bottomRef = useRef(null);
+  const lastMsgRef = useRef(null);
+  const prevCountRef = useRef(0);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isLoading]);
+    const prevCount = prevCountRef.current;
+    prevCountRef.current = messages.length;
+
+    if (messages.length > prevCount && messages.length > 0) {
+      // A new message was added — scroll its top into view
+      lastMsgRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [messages]);
 
   return (
     <div className="chat-messages">
       {messages.map((msg, i) => {
+        const isLast = i === messages.length - 1;
         if (msg.role === 'user') {
           return (
-            <div key={i} className="message-row user-row">
+            <div key={i} className="message-row user-row" ref={isLast ? lastMsgRef : null}>
               <div className="user-bubble">{msg.text}</div>
             </div>
           );
         }
         if (msg.role === 'error') {
           return (
-            <div key={i} className="message-row coach-row">
+            <div key={i} className="message-row coach-row" ref={isLast ? lastMsgRef : null}>
               <div className="error-message">{msg.text}</div>
             </div>
           );
         }
         return (
-          <div key={i} className="message-row coach-row">
+          <div key={i} className="message-row coach-row" ref={isLast ? lastMsgRef : null}>
             <CoachMessage text={msg.text} />
           </div>
         );
@@ -170,7 +178,6 @@ export default function ChatPanel({ messages, isLoading, loadingType, previewDat
           {loadingType === 'video' ? <VideoLoadingIndicator previewData={previewData} /> : <TypingIndicator />}
         </div>
       )}
-      <div ref={bottomRef} />
     </div>
   );
 }
