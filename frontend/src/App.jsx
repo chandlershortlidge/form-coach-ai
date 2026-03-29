@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import ChatPanel from './components/ChatPanel';
 import InputBar from './components/InputBar';
 import { analyze } from './utils/api';
@@ -11,6 +11,26 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingType, setLoadingType] = useState(null);
   const [previewData, setPreviewData] = useState(null);
+  const [videoFile, setVideoFile] = useState(null);
+  const videoUrlRef = useRef(null);
+  const [videoUrl, setVideoUrl] = useState(null);
+
+  // Create/revoke object URL when videoFile changes
+  useEffect(() => {
+    if (videoFile) {
+      const url = URL.createObjectURL(videoFile);
+      videoUrlRef.current = url;
+      setVideoUrl(url);
+    } else {
+      setVideoUrl(null);
+    }
+    return () => {
+      if (videoUrlRef.current) {
+        URL.revokeObjectURL(videoUrlRef.current);
+        videoUrlRef.current = null;
+      }
+    };
+  }, [videoFile]);
 
   const addMessage = useCallback((msg) => {
     setMessages((prev) => [...prev, msg]);
@@ -53,6 +73,7 @@ export default function App() {
       ? `📎 ${file.name}\n${textInput}`
       : `📎 ${file.name}`;
     addMessage({ role: 'user', text: display });
+    setVideoFile(file);
     setIsLoading(true);
     setLoadingType('video');
     setPreviewData(null);
@@ -90,16 +111,39 @@ export default function App() {
   }
 
   return (
-    <div className="app">
+    <div className={`app${videoUrl ? ' has-video' : ''}`}>
       <h1 className="app-title">Fitness Form Coach</h1>
-      <div className="chat-panel">
-        <ChatPanel messages={messages} isLoading={isLoading} loadingType={loadingType} previewData={previewData} />
-        <InputBar
-          onSendText={handleSendText}
-          onSendVideo={handleSendVideo}
-          onSendAudio={handleSendAudio}
-          disabled={isLoading}
-        />
+      <div className="app-layout">
+        <div className="chat-panel">
+          <ChatPanel messages={messages} isLoading={isLoading} loadingType={loadingType} previewData={previewData} />
+          <InputBar
+            onSendText={handleSendText}
+            onSendVideo={handleSendVideo}
+            onSendAudio={handleSendAudio}
+            disabled={isLoading}
+          />
+        </div>
+        {videoUrl && (
+          <div className="video-panel">
+            <div className="video-panel-header">
+              <span className="video-panel-title">Your Video</span>
+              <button
+                className="video-panel-close"
+                onClick={() => setVideoFile(null)}
+                aria-label="Close video panel"
+              >
+                ✕
+              </button>
+            </div>
+            <video
+              className="video-player"
+              src={videoUrl}
+              controls
+              playsInline
+              preload="metadata"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
