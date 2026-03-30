@@ -163,9 +163,13 @@ export default function App() {
 
   // Build session list for sidebar
   const sidebarSessions = sessionHistory.map((s) => {
-    const date = s.created_at
-      ? new Date(s.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-      : '';
+    let date = '';
+    if (s.created_at) {
+      const d = new Date(s.created_at);
+      const day = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      const time = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      date = `${day}, ${time}`;
+    }
     return {
       id: s.session_id,
       label: s.exercise_label || s.video_filename || 'Untitled session',

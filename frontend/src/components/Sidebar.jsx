@@ -54,8 +54,10 @@ export default function Sidebar({ sessions, searchQuery, onSearchChange, onNewSe
                   <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
                 </svg>
               </span>
-              <span className="sidebar-item-label">{s.label}</span>
-              <span className="sidebar-item-date">{s.date}</span>
+              <span className="sidebar-item-text">
+                <span className="sidebar-item-label">{s.label}</span>
+                <span className="sidebar-item-date">{s.date}</span>
+              </span>
             </button>
           ))}
         </div>
