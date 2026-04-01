@@ -1,4 +1,3 @@
-import pandas as pd
 from scipy.stats import bootstrap
 import numpy as np
 

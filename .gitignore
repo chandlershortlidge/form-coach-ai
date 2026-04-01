@@ -215,6 +215,9 @@ chroma_db/
 *.mov
 *.mp4
 
+# data
+*.csv
+
 
 
 
