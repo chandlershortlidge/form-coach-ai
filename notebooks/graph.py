@@ -22,11 +22,16 @@ from langchain_openai import OpenAIEmbeddings
 from langgraph.graph import StateGraph, START, END
 import re
 
-load_dotenv(dotenv_path="/Users/chandlershortlidge/Desktop/Ironhack/fitness-form-coach/.env")
-api_key = os.getenv("OPENAI_API_KEY")
+load_dotenv()
 
-embeddings = OpenAIEmbeddings(model='text-embedding-3-small')
-vectorstore = Chroma(persist_directory="/Users/chandlershortlidge/Desktop/Ironhack/fitness-form-coach/chroma_db", embedding_function=embeddings)
+api_key = os.getenv("OPENAI_API_KEY")
+CHROMA_DIR = os.getenv("CHROMA_DIR", "./chroma_db")
+
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+vectorstore = Chroma(
+    persist_directory=CHROMA_DIR,
+    embedding_function=embeddings
+)
 
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_API_KEY"] = os.getenv("LANGSMITH_API_KEY")

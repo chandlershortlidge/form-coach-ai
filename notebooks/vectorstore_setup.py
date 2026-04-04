@@ -1,19 +1,20 @@
 
 
-from langchain_openai import ChatOpenAI
-from langchain_text_splitters import RecursiveCharacterTextSplitter 
-from langchain_core.documents import Document
-from youtube_transcript_api import YouTubeTranscriptApi
-ytt_api = YouTubeTranscriptApi()
+import re
 
 import fitz #pymuPDF
-
+from langchain_openai import ChatOpenAI
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_core.documents import Document
+from langchain_core.messages import BaseMessage
+from youtube_transcript_api import YouTubeTranscriptApi
+ytt_api = YouTubeTranscriptApi()
 
 from utils import read_json, write_json
 
 
 # write a function that takes a video_id and returns the transcript text
-def get_transcript(video_id):
+def get_transcript(video_id: str) -> str:
     """Fetch and join the transcript for a YouTube video.
 
     Args:
@@ -28,7 +29,7 @@ def get_transcript(video_id):
     joined = " ".join(extracted)
     return joined
 
-def get_PDF_text(filepath_in):
+def get_PDF_text(filepath_in: str) -> str:
     """Extract all text from a PDF file.
 
     Args:
@@ -46,7 +47,7 @@ def get_PDF_text(filepath_in):
     doc.close()
     return pdf_text
 
-def write_documnent_metadata(title, author, exercise_type, difficulty, text):
+def write_documnent_metadata(title: str, author: str, exercise_type: str, difficulty: str, text: str) -> dict[str, str]:
     """Build a metadata dictionary for a transcript document.
 
     Args:
@@ -62,7 +63,7 @@ def write_documnent_metadata(title, author, exercise_type, difficulty, text):
     doc_metadata = {"title": title, "author": author, "exercise_type": exercise_type,  "difficulty": difficulty, "transcript": text}
     return doc_metadata
 
-def write_metadata(video_id, difficulty, title, author, exercise_type, transcript):
+def write_metadata(video_id: str, difficulty: str, title: str, author: str, exercise_type: str, transcript: str) -> dict[str, str]:
     """Create metadata for a YouTube transcript with a constructed URL.
 
     Args:
@@ -82,7 +83,7 @@ def write_metadata(video_id, difficulty, title, author, exercise_type, transcrip
 
 
 # Read that dictionary (data) back from the JSON
-def clean_and_save_transcript(filepath_in, filepath_out):
+def clean_and_save_transcript(filepath_in: str, filepath_out: str) -> None:
     """Clean a transcript with an LLM and save updated metadata.
 
     Args:
@@ -114,8 +115,7 @@ def clean_and_save_transcript(filepath_in, filepath_out):
 
 
 
-import re
-def clean_classification_text(r):
+def clean_classification_text(r: BaseMessage) -> str:
     """Strip non-letter characters from an LLM response.
 
     Args:
@@ -128,7 +128,7 @@ def clean_classification_text(r):
     response_cleaned = re.sub(r'[^a-zA-Z]', ' ', create_string)
     return response_cleaned
 
-def split_text_add_video_metadata(cleaned_json_dict):
+def split_text_add_video_metadata(cleaned_json_dict: str) -> list[Document]:
     """Chunk cleaned transcript text and attach source metadata.
 
     Args:
@@ -167,7 +167,7 @@ def split_text_add_video_metadata(cleaned_json_dict):
     return chunked_documents
 
 
-def split_text_add_TEXT_metadata(cleaned_json_dict):
+def split_text_add_TEXT_metadata(cleaned_json_dict: str) -> list[Document]:
     """Chunk cleaned transcript text and attach minimal metadata.
 
     Args:

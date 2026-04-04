@@ -9,7 +9,7 @@ import cv2
 
 """VIDEO PROCESSING PIPELINE"""
 
-def create_video_name_and_save_to_files(filepath_in, frames):
+def create_video_name_and_save_to_files(filepath_in: str, frames: list) -> str:
     basename = os.path.basename(filepath_in) # takes path and returns basename (video_name.mp4)
     split_text = basename.split(".") # splits basename into list
     video_name = split_text[0] # returns first item on that list
@@ -23,7 +23,7 @@ def create_video_name_and_save_to_files(filepath_in, frames):
 # def save_video_frames(filepath_in, frames):
 #     video_name = create_video_name(filepath_in)
 
-def analyze_video(filepath_in, max_seconds, frame_count):
+def analyze_video(filepath_in: str, max_seconds: int, frame_count: int) -> list[str]:
     frames = extract_video_frames(filepath_in, max_seconds, frame_count)
     video_name = create_video_name_and_save_to_files(filepath_in, frames)
     encoded_frames = []
@@ -39,7 +39,7 @@ def analyze_video(filepath_in, max_seconds, frame_count):
 # interval_seconds = max_seconds / extracted_frame_count
 # Interval_frames = interval_seconds * native_fps
 
-def extract_video_frames(filepath_in, max_seconds, frame_count):
+def extract_video_frames(filepath_in: str, max_seconds: int, frame_count: int) -> list:
     frames = []
     current_frame = 0
     cap = cv2.VideoCapture(filepath_in) # opens the video like open('file.txt'). cap is now the video object 
@@ -72,7 +72,7 @@ def extract_video_frames(filepath_in, max_seconds, frame_count):
 # create a base64 encoder so taht we can send images to the model API. 
 # the model API communicates via JSON. JSON is text. You can't put raw images bytes into JSON.
 # So you encode the bytes into a text string which can be decoded by the model.
-def base_encoder(filepath_in):
+def base_encoder(filepath_in: str) -> str:
     with open(filepath_in, 'rb') as image_file:
         # read the binary data
         binary_data = image_file.read()
