@@ -1,0 +1,12 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t',
+        'europe-west1-docker.pkg.dev/sodium-daylight-457415-r0/fitness-form-coach/fitness-form-coach',
+        '.'
+      ]
+
+images:
+  - 'europe-west1-docker.pkg.dev/sodium-daylight-457415-r0/fitness-form-coach/fitness-form-coach'
