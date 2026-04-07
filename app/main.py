@@ -1,6 +1,16 @@
+
+import logging
 from fastapi import FastAPI, UploadFile, Form
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
+import asyncio
+import json
+import tempfile
+import os
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__) 
+
 if __package__:
     from .graph import (
         app as graph_app, transcribe_audio,
@@ -15,10 +25,6 @@ else:
         vector_db_node, response_generator,
     )
     from sessions import create_session, get_session, update_session, list_sessions
-import asyncio
-import json
-import tempfile
-import os
 
 app = FastAPI()
 
@@ -55,6 +61,7 @@ def api_get_session(session_id: str):
 
 @app.post("/analyze")
 async def analyze(session_id: str, user_query: str = Form(None), user_video: UploadFile = None, user_audio: UploadFile = None):
+    logger.info(f"analyze request started | session_id={session_id}")
 
     #1. if audio, transcribe it to get the query
     transcription = None
