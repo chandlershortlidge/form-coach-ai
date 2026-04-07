@@ -4,6 +4,7 @@
 import base64
 import os 
 import cv2
+import tempfile
 
 
 
@@ -11,27 +12,26 @@ import cv2
 
 def create_video_name_and_save_to_files(filepath_in: str, frames: list) -> str:
     basename = os.path.basename(filepath_in) # takes path and returns basename (video_name.mp4)
-    split_text = basename.split(".") # splits basename into list
-    video_name = split_text[0] # returns first item on that list
+    video_name = basename.split(".")[0] # splits basename into list
+    tmp_dir = tempfile.mkdtemp()
     for i, frame in enumerate(frames):
-        cv2.imwrite(f"/Users/chandlershortlidge/Desktop/Ironhack/fitness-form-coach/data/processed/processed-images/{video_name}_{i}.jpg", frame) 
-        # cv2.imwrite is where the frame gets saved to disk
-    print(f"Saved to processed-images/{video_name}")
+        cv2.imwrite(f"{tmp_dir}/{video_name}_{i}.jpg", frame)
+        # cv2.imwrite is where the frame gets saved as a temp file
+    print(f"Saved to {tmp_dir}/{video_name}")
     print("Video name:", video_name)
-    return video_name
+    return video_name, tmp_dir
 
 # def save_video_frames(filepath_in, frames):
 #     video_name = create_video_name(filepath_in)
 
 def analyze_video(filepath_in: str, max_seconds: int, frame_count: int) -> list[str]:
     frames = extract_video_frames(filepath_in, max_seconds, frame_count)
-    video_name = create_video_name_and_save_to_files(filepath_in, frames)
+    video_name, tmp_dir = create_video_name_and_save_to_files(filepath_in, frames)
     encoded_frames = []
     for i in range(frame_count):
-        filepath = f"/Users/chandlershortlidge/Desktop/Ironhack/fitness-form-coach/data/processed/processed-images/{video_name}_{i}.jpg"
+        filepath = f"{tmp_dir}/{video_name}_{i}.jpg"
         encoded = base_encoder(filepath)
         encoded_frames.append(encoded)
-
     return encoded_frames
 
 
