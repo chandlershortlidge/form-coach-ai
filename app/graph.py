@@ -83,7 +83,7 @@ router_prompt = ChatPromptTemplate.from_messages([
      
 ])
 
-llm = ChatOpenAI(model='gpt-4o')
+llm = ChatOpenAI(model='gpt-5.4-nano')
 
 output_parser = StrOutputParser()
 
@@ -132,7 +132,7 @@ def video_encoder_node(state: GraphState):
 def video_classification_node(state: GraphState):
     classification_image = state["classification_image"]
 
-    router_llm = ChatOpenAI(model='gpt-4o')
+    router_llm = ChatOpenAI(model='gpt-5.4-nano')
 
     response = router_llm.invoke([
 
@@ -286,7 +286,7 @@ def chat_memory(state: GraphState):
         {"type": "text", "text": user_query}
     ])
 
-    llm = ChatOpenAI(model='gpt-4o',
+    llm = ChatOpenAI(model='gpt-5.4-nano',
                     temperature=0.5)
 
     output_parser = StrOutputParser()
