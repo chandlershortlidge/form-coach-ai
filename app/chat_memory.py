@@ -4,7 +4,7 @@ from langchain_core.chat_history import InMemoryChatMessageHistory
 chat_map = {}
 
 def get_chat_history(session_id):
-    if session_id not in chat_map:
+    if session_id not in chat_map: # chat map: dict --> contains the session IDs (keys) and values (messages)
         chat_map[session_id] = InMemoryChatMessageHistory()
     return chat_map[session_id]
 
