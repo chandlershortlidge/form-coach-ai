@@ -1,0 +1,50 @@
+{
+  "test123": {
+    "session_id": "test123",
+    "created_at": "2026-04-09T13:14:42.073080+00:00",
+    "updated_at": "2026-04-09T13:14:44.060115+00:00",
+    "exercise_label": "thanks!",
+    "user_query": "thanks!",
+    "video_filename": null,
+    "video_gcs_path": null,
+    "classification_raw": null,
+    "response": "You\u2019re welcome! \ud83d\ude4c  \nIf you want, send a photo/video of your lift (and tell me which exercise + your goal\u2014strength, hypertrophy, or cutting). I\u2019ll check your form and give you specific cues to maximize muscle growth and keep you safe.",
+    "status": "completed"
+  },
+  "39131428-6aea-42b5-a9b5-b6e5c13375c0": {
+    "session_id": "39131428-6aea-42b5-a9b5-b6e5c13375c0",
+    "created_at": "2026-04-09T13:24:48.986537+00:00",
+    "updated_at": "2026-04-09T13:24:55.024045+00:00",
+    "exercise_label": "thanks!",
+    "user_query": "thanks!",
+    "video_filename": null,
+    "video_gcs_path": null,
+    "classification_raw": null,
+    "response": "You\u2019re welcome\u2014glad it helped.  \n\nIf you want, send one more side-angle video (camera at the same level as your bar, showing your butt/legs clearly) and tell me your typical bench grip width + what weight you\u2019re aiming for. I\u2019ll dial in your exact setup (feet/shins, arch height, and the bar path) for maximum hypertrophy and strength.",
+    "status": "completed"
+  },
+  "a943f1a7-ea54-4085-9a83-e5aac6825f12": {
+    "session_id": "a943f1a7-ea54-4085-9a83-e5aac6825f12",
+    "created_at": "2026-04-09T13:30:49.729694+00:00",
+    "updated_at": "2026-04-09T13:30:49.733458+00:00",
+    "exercise_label": null,
+    "user_query": "thanks!",
+    "video_filename": null,
+    "video_gcs_path": null,
+    "classification_raw": null,
+    "response": null,
+    "status": "analyzing"
+  },
+  "01428c9d-fd16-4d91-9146-94af72334359": {
+    "session_id": "01428c9d-fd16-4d91-9146-94af72334359",
+    "created_at": "2026-04-09T13:42:31.006378+00:00",
+    "updated_at": "2026-04-09T13:42:32.927010+00:00",
+    "exercise_label": "thanks!",
+    "user_query": "thanks!",
+    "video_filename": null,
+    "video_gcs_path": null,
+    "classification_raw": null,
+    "response": "You\u2019re welcome! If you want, upload a couple more photos (or a short video) from **the same lift** showing your **setup** and your **lowest + mid + lockout** positions, and tell me what weight/reps you\u2019re using\u2014I\u2019ll give you more specific cues and exact adjustments.",
+    "status": "completed"
+  }
+}

@@ -244,7 +244,7 @@ def response_generator(state: GraphState):
         *encoded_images,   # <- your list of {"type":"image_url",...}
     ])
 
-    response_generator_llm = ChatOpenAI(model='gpt-5',
+    response_generator_llm = ChatOpenAI(model='gpt-5.4',
                     temperature=0.5)
 
     response_generator_output_parser = StrOutputParser()
@@ -289,48 +289,51 @@ def response_generator(state: GraphState):
 
 
     return {"response": fitness_analysis} # return full analysis to user
+     
+    
     
 
+# module level - built once when file loads 
+chat_memory_prompt = ChatPromptTemplate.from_messages([
+            ("system", """You are a world-class fitness coach. 
+             You have extensive experience in helping weight lifters achieve perfect form and maximum hypertrophy. 
+    Your job is to analyze images of users lifting weights, offer them advice from your context, and to answer any questions they might have. 
+
+
+    """),
+        MessagesPlaceholder(variable_name="history"),
+        MessagesPlaceholder(variable_name="input"),
+    ])
+
+   
+chat_memory_llm = ChatOpenAI(model='gpt-5.4-nano', temperature=0.5)
+chat_memory_output_parser = StrOutputParser()
+
+chat_memory_chain = chat_memory_prompt | chat_memory_llm | chat_memory_output_parser
+
+chat_memory_with_history = RunnableWithMessageHistory(
+    chat_memory_chain,
+    get_session_history=get_chat_history,
+    input_messages_key="input",
+    history_messages_key="history"
+
+)
+
+# Function: calls only what changes
 def chat_memory(state: GraphState):
-    chat_memory_prompt = ChatPromptTemplate.from_messages([
-                ("system", """You are a world-class fitness coach. 
-                You have extensive experience in helping weight lifters achieve perfect form and maximum hypertrophy. 
-        Your job is to analyze images of users lifting weights, offer them advice from your context, and to answer any questions they might have. 
+    user_query = state["user_query"]
+    session_id = state["session_id"]
 
+    user_msg = HumanMessage(content=[
+        {"type": "text", "text": user_query}
+    ])
 
-        """),
-            MessagesPlaceholder(variable_name="history"),
-            MessagesPlaceholder(variable_name="input"),
-        ])
-
+    response = chat_memory_with_history.invoke(
+    {"input": [user_msg]},
+    config={"configurable": {"session_id": session_id}}
+)
+    return {"response": response}
     
-    chat_memory_llm = ChatOpenAI(model='gpt-5.4-nano', temperature=0.5)
-    chat_memory_output_parser = StrOutputParser()
-
-    chat_memory_chain = chat_memory_prompt | chat_memory_llm | chat_memory_output_parser
-
-    chat_memory_with_history = RunnableWithMessageHistory(
-        chat_memory_chain,
-        get_session_history=get_chat_history,
-        input_messages_key="input",
-        history_messages_key="history"
-
-    )
-
-    # Function: calls only what changes
-    def chat_memory(state: GraphState):
-        user_query = state["user_query"]
-        session_id = state["session_id"]
-
-        user_msg = HumanMessage(content=[
-            {"type": "text", "text": user_query}
-        ])
-
-        response = chat_memory_with_history.invoke(
-        {"input": [user_msg]},
-        config={"configurable": {"session_id": session_id}}
-    )
-        return {"response": response}
     
 
 def route_query(state: GraphState):

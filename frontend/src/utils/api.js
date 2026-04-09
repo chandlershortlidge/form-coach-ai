@@ -1,4 +1,4 @@
-const BASE_URL = 'https://fitness-form-coach-t32qh37koa-ew.a.run.app';
+const BASE_URL = 'http://127.0.0.1:8000';
 
 export async function fetchSessions(limit = 20) {
   const res = await fetch(`${BASE_URL}/sessions?limit=${limit}`);
