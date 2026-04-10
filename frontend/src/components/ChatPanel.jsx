@@ -1,51 +1,10 @@
+import ReactMarkdown from 'react-markdown'; 
 import { useEffect, useRef, useState } from 'react';
 
-function parseCoachResponse(text) {
-  if (!text) return [];
-  const lines = text.split('\n');
-  const elements = [];
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const trimmed = line.trim();
-
-    if (trimmed === '') {
-      elements.push({ type: 'spacer', key: i });
-    } else if (trimmed.startsWith('- ')) {
-      elements.push({ type: 'bullet', text: trimmed.slice(2), key: i });
-    } else if (/^\d+\)\s/.test(trimmed)) {
-      elements.push({ type: 'numbered', text: trimmed, key: i });
-    } else if (trimmed.length < 60 && !trimmed.startsWith('-') && !trimmed.includes('. ')) {
-      elements.push({ type: 'header', text: trimmed, key: i });
-    } else {
-      elements.push({ type: 'paragraph', text: trimmed, key: i });
-    }
-  }
-
-  return elements;
-}
-
 function CoachMessage({ text }) {
-  const parts = parseCoachResponse(text);
-
   return (
     <div className="coach-message">
-      {parts.map((part) => {
-        switch (part.type) {
-          case 'spacer':
-            return <div key={part.key} className="spacer" />;
-          case 'header':
-            return <div key={part.key} className="coach-header">{part.text}</div>;
-          case 'bullet':
-            return <div key={part.key} className="coach-bullet">- {part.text}</div>;
-          case 'numbered':
-            return <div key={part.key} className="coach-numbered">{part.text}</div>;
-          case 'paragraph':
-            return <div key={part.key} className="coach-paragraph">{part.text}</div>;
-          default:
-            return null;
-        }
-      })}
+      <ReactMarkdown>{text}</ReactMarkdown>
     </div>
   );
 }
