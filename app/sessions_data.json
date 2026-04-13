@@ -82,5 +82,29 @@
     "classification_raw": null,
     "response": "Use a grip just outside shoulder width and keep your shoulder blades pinched together with your chest up on the bench. As you lower the bar, think about \u201cbending the bar into a U\u201d to keep your elbows from flaring too much, then press up smoothly while keeping your upper back planted and feet driving into the floor.\n\nOne cue for your next set: **keep your forearms vertical at the bottom**.\n\nIf you want, I can also break down bench angle, elbow position, or common incline mistakes.",
     "status": "completed"
+  },
+  "e21851c2-9a99-40d6-a3b2-4dd26a59b118": {
+    "session_id": "e21851c2-9a99-40d6-a3b2-4dd26a59b118",
+    "created_at": "2026-04-13T13:12:40.021976+00:00",
+    "updated_at": "2026-04-13T13:12:55.371476+00:00",
+    "exercise_label": "Bench press",
+    "user_query": "how do I look",
+    "video_filename": "bench_14.mp4",
+    "video_gcs_path": null,
+    "classification_raw": "Bench press\n\n1. Feet & base\n2. Glutes & lower body\n3. Lower back arch\n4. Ribcage & torso position\n5. Shoulder blades (scapular set)\n6. Shoulder position (front/back, elevation)\n7. Elbow position\n8. Forearm & wrist alignment\n9. Bar path to/from chest\n10. Head & neck position\n11. Grip width & hand placement\n12. Top position lockout alignment",
+    "response": "You look solid overall. From these frames, your bar path looks fairly controlled and you\u2019re touching in a consistent lower-chest/upper-ab area, which is good, but your wrists look a bit extended and your elbows may be drifting a little wide at the bottom.\n\nNext set, try this one cue: **stack the bar directly over the heel of your palm and forearm the whole rep\u2014squeeze the bar hard and keep wrists straighter.**\n\nAlso worth checking: keep your upper back pinned to the bench, use steadier leg drive, and a side-angle video would make bar path and elbow position much easier to assess.",
+    "status": "completed"
+  },
+  "388c49ae-6584-478f-bc8f-163714b3072c": {
+    "session_id": "388c49ae-6584-478f-bc8f-163714b3072c",
+    "created_at": "2026-04-13T13:14:28.304392+00:00",
+    "updated_at": "2026-04-13T13:14:51.405279+00:00",
+    "exercise_label": "Bench press (barbell)",
+    "user_query": "how do I look",
+    "video_filename": "bench_14.mp4",
+    "video_gcs_path": null,
+    "classification_raw": "Bench press (barbell)\n\n1. Feet & base\n2. Glutes & hips on bench\n3. Low back & lumbar position\n4. Core brace & ribcage\n5. Shoulder position (protraction/retraction)\n6. Shoulder blade \u201cset\u201d (scapula)\n7. Elbow position (angle) & forearm alignment\n8. Hand/wrist position on bar\n9. Head & neck position\n10. Bar path relative to chest\n11. Torso-to-bar distance and arch\n12. End-range lockout position (elbows/shoulders)",
+    "response": "I\u2019m seeing a flat barbell bench press from a front-left angle. You\u2019ve got a noticeable arch, your upper back stays on the bench, your feet are planted, and the bar is touching around the lower chest/upper sternum area. Across reps, the bar path looks fairly consistent, but I also notice your elbows flare a bit as you press, your wrists look somewhat bent back under the bar, and your foot position looks wide and a little loose for maximizing leg drive. Also, with this weight and no visible spotter, safety is worth mentioning.\n\n## What looks good\n- **You\u2019re touching in a solid spot on the chest.** The bar comes down to a good lower-chest/upper sternum area rather than drifting too high toward the neck.\n- **You\u2019ve got a decent base already.** Your upper back appears planted and you maintain an arch instead of going completely flat and loose on the bench.\n\n## Main fixes\n- **Tuck the elbows a bit more on the way down.** Right now they look a little too flared at parts of the press. A better position is roughly **45 degrees relative to your torso**. Think about **\u201cbending the bar into a U\u201d** or **\u201cprotect your armpits.\u201d** That should help engage your lats, improve shoulder comfort, and make the press more efficient.\n- **Create more upper-back tightness before the unrack.** I\u2019d like to see you really **squeeze your shoulder blades together** and keep them pinned throughout the set. Your upper back should feel like a solid platform you\u2019re pressing from.\n- **Improve leg drive setup.** Your feet are planted, but they look pretty wide and not especially tucked back. Try bringing your feet **farther back as much as you comfortably can**, while keeping your **glutes on the bench**. That\u2019ll let you drive more force through the floor and stay tighter through the whole set.\n- **Stack the wrists more directly under the bar.** Your wrists appear extended backward. Try to hold the bar so it sits **more directly over the wrist joint**, not back toward the fingers. That\u2019ll improve force transfer and reduce wrist strain.\n- **Grip the bar harder and use the bar-bending cue.** Actively trying to **\u201crip the bar in half\u201d** can help keep your upper back engaged and naturally guide your elbows into a safer pressing position.\n- **Safety note:** you don\u2019t appear to have a spotter. For a working set like this, especially if you\u2019re close to failure, having a **spotter** or using safeties would be a very good idea.\n\n## Mental cues\n- **Squeeze shoulder blades into the bench**\n- **Big breath, brace hard**\n- **Bend the bar into a U**\n- **Elbows at 45 degrees**\n- **Drive through the feet**\n- **Press from a tight upper back**\n\nOverall: **solid base, definitely not bad**, and you\u2019re already doing a few important things right. Your biggest gains will come from **more upper-back tightness, better wrist stacking, and slightly less elbow flare**. If you want, I can also give you a **rep-by-rep breakdown** or a **3-step bench setup checklist** based on this video.",
+    "status": "completed"
   }
 }
