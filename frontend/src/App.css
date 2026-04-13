@@ -459,6 +459,14 @@ body {
   letter-spacing: 0.005em;
 }
 
+.coach-message p {
+  margin: 0 0 12px 0;
+}
+
+.coach-message p:last-child {
+  margin-bottom: 0;
+}
+
 .coach-header {
   font-weight: 600;
   font-size: 16px;
