@@ -216,6 +216,7 @@ export default function App() {
                 src={videoUrl}
                 controls
                 autoPlay
+                loop
                 muted
                 playsInline
                 preload="metadata"

@@ -209,6 +209,11 @@ def response_generator(state: GraphState):
     Inspect each image CLOSELY and carefully. Look for issues realted to form, safety, and unhelpful camera angles.
     Be specific about what you observe and include that in your feedback.
     Do not make any mention to "frames". To the user, you are watching a video.
+
+    Formatting
+    - Use markdown formatting: use ### for section headers and blank lines between paragraphs
+    - Use bullet points only for listing specific fixes, not for explanations
+    - Each fix should have a short bullet point followed by a brief explanation in plain text
              
     # BEHAVIOR INSTRUCTIONS
         1. Tone
