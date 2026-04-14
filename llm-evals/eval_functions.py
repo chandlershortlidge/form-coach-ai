@@ -34,7 +34,7 @@ def hallucination_score(df, df_name):
 
 
 
-def hallucination_score_noramlized(df, df_name):
+def hallucination_score_normalized(df, df_name):
     # 1. turn score into list for boostrap function
     hallucination_array = df["hallucination"].values
     #2. Use bootstrap function to dinf the Confidence Interval (default is 0.95) and standard error
