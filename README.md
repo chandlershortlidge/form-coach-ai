@@ -49,18 +49,18 @@ The entire pipeline is orchestrated as a **LangGraph state machine** ([app/graph
 
 ### Video Path (video attached)
 1. **Video Encoder** — [app/video_processing.py](app/video_processing.py) extracts frames from the workout video using OpenCV and base64-encodes them
-2. **Video Classification** — GPT-4o identifies the exercise type and key body checkpoints from a representative frame
+2. **Video Classification** — GPT-5.4-nano identifies the exercise type and key body checkpoints from a representative frame
 3. **Vector DB** — Classification keywords + user query both drive similarity searches against ChromaDB; results are deduplicated
-4. **Response Generator** — All frames + retrieved expert context are passed to GPT-5 for multi-frame form analysis with conversation history
+4. **Response Generator** — All frames + retrieved expert context are passed to GPT-5.4 for multi-frame form analysis with conversation history. The full response is streamed to the user, then a lightweight GPT-5.4-nano summarizer condenses it into a short memory entry before it is written to chat history — this keeps follow-up context small and cheap without losing the key facts.
 
 ### Text + Vectorstore Path (exercise/technique question, no video)
 1. **Vector DB** — User query drives a similarity search for relevant expert context
-2. **Response Generator** — Retrieved context + conversation history are passed to GPT-5
+2. **Response Generator** — Retrieved context + conversation history are passed to GPT-5.4
 
 ### Memory-Only Path (general conversation)
-1. **Chat Memory** — GPT-5 responds using conversation history alone (no retrieval)
+1. **Chat Memory** — GPT-5.4-nano responds using conversation history alone (no retrieval)
 
-The path is selected by `route_query()`: if a video is attached it always takes the video path; otherwise a GPT-4o router classifies the text query as needing vectorstore retrieval or memory only.
+The path is selected by `route_query()`: if a video is attached it always takes the video path; otherwise a GPT-5.4-nano router classifies the text query as needing vectorstore retrieval or memory only.
 
 ## Backend API
 
@@ -75,7 +75,7 @@ Sessions are persisted via [app/sessions.py](app/sessions.py), which currently u
 
 ## Frontend
 
-[frontend/](frontend/) is a React 19 + Vite single-page app that consumes the SSE `/analyze` stream, renders progress updates and the final coaching response, and lists prior sessions in a sidebar. It is built into a static bundle and served by nginx ([frontend/nginx.conf](frontend/nginx.conf)) in its own container.
+[frontend/](frontend/) is a React 19 + Vite single-page app that consumes the SSE `/analyze` stream, renders progress updates and the final coaching response (via `react-markdown`), and lists prior sessions in a sidebar. Uploaded videos are previewed inline in an autoplay/loop player next to the chat. It is built into a static bundle and served by nginx ([frontend/nginx.conf](frontend/nginx.conf)) in its own container.
 
 ## Deployment
 
@@ -90,7 +90,7 @@ Both services run on **Google Cloud Run**, built via Cloud Build:
 - **Python / FastAPI** — async backend with SSE streaming
 - **React 19 + Vite** — frontend SPA
 - **LangGraph** — state machine orchestration with conditional routing
-- **OpenAI API** — GPT-5 (form analysis + conversation), GPT-4o (image classification + query routing), `text-embedding-3-small` (embeddings), Whisper (voice-to-text)
+- **OpenAI API** — GPT-5.4 (form analysis), GPT-5.4-nano (query routing, image classification, memory summarization, memory-only chat), `text-embedding-3-small` (embeddings), Whisper (voice-to-text)
 - **LangChain** — document loading, text splitting, prompt templates, `RunnableWithMessageHistory` for conversation memory
 - **ChromaDB** — persistent vector storage and similarity search
 - **OpenCV** — video frame extraction and processing
@@ -106,6 +106,7 @@ Both services run on **Google Cloud Run**, built via Cloud Build:
 - **Streaming responses**: The `/analyze` endpoint emits SSE events as each graph node finishes, so the user sees `Watching your video...` → classification preview → final response instead of waiting on a single blocking request.
 - **Multi-frame analysis**: Rather than analyzing a single snapshot, the system passes multiple frames to GPT-5 so it can detect patterns across the movement (e.g., bar path, elbow flare throughout the rep).
 - **Classifier-driven retrieval**: A separate classification model tags each image with exercise type and body checkpoints, which are then used as the similarity search query. This produces more relevant context than raw image descriptions.
+- **Summarized chat memory**: After each video analysis, a small model condenses the full response into a short memory entry (exercise, main issues, priority fixes) before it's written to history. This cut per-turn memory from ~18K to ~1.4K tokens and dropped chat-memory-path latency accordingly, without losing continuity for follow-ups.
 - **Precision over recall**: For fitness advice, wrong information can cause injury. The system is designed to say "I don't have that information yet" rather than guess.
 - **Grounded responses**: The system prompt explicitly constrains the LLM to only use retrieved context, reducing hallucination risk.
 - **Pluggable session storage**: Sessions go through a thin interface so the JSON-file backend can be swapped for Firestore without touching the API or graph code.
