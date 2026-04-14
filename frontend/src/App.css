@@ -27,7 +27,8 @@
 body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
-  font-size: 15px;
+  font-size: 15.5px;
+  line-height: 1.65;
   color: var(--text);
   -webkit-font-smoothing: antialiased;
 }
@@ -48,11 +49,11 @@ body {
 }
 
 .app-title {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   color: var(--text);
   margin-bottom: 16px;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 /* ── Sidebar ── */
@@ -183,7 +184,7 @@ body {
 }
 
 .sidebar-item:hover {
-  background: var(--surface-raised);
+  background: rgba(255,255,255,0.08);
   color: var(--text);
 }
 
@@ -337,7 +338,6 @@ body {
 /* ── Chat panel ── */
 .chat-panel {
   background: var(--surface);
-  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   width: 100%;
   max-width: 720px;
@@ -346,6 +346,7 @@ body {
   flex-direction: column;
   overflow: hidden;
   min-width: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06);
 }
 
 /* ── Video panel ── */
@@ -406,7 +407,63 @@ body {
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 28px 28px 12px;
+  padding: 32px 28px 12px;
+}
+
+/* ── Empty state ── */
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state-content {
+  text-align: center;
+  max-width: 360px;
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-state-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1A1A1A;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.empty-state-subtitle {
+  font-size: 15px;
+  color: #6B7280;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.empty-state-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.suggestion-chip {
+  background: #F0F1F5;
+  border: 1px solid #E2E4E9;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.suggestion-chip:hover {
+  background: #E5E7EB;
+  border-color: #D1D5DB;
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -448,6 +505,7 @@ body {
   line-height: 1.6;
   word-wrap: break-word;
   white-space: pre-line;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 /* ── Coach message / analysis output ── */
@@ -469,7 +527,7 @@ body {
 
 .coach-header {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 17px;
   color: var(--text);
   margin-top: 16px;
   margin-bottom: 6px;
@@ -490,12 +548,12 @@ body {
 }
 
 .coach-paragraph {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: var(--text);
 }
 
 .spacer {
-  height: 14px;
+  height: 16px;
 }
 
 /* ── Error message ── */
@@ -607,6 +665,7 @@ body {
   margin-bottom: 8px;
   font-size: 13px;
   color: var(--text);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
 }
 
 .video-chip-name {
@@ -637,8 +696,9 @@ body {
   gap: 8px;
   padding: 8px 16px;
   background: var(--surface-raised);
-  border: 1px solid var(--border);
+  border: 1px solid #D1D5DB;
   border-radius: 24px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   transition: border-color 0.15s;
 }
 

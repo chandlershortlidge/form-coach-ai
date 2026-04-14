@@ -108,6 +108,25 @@ export default function ChatPanel({ messages, isLoading, loadingType, previewDat
     }
   }, [messages]);
 
+  if (messages.length === 0 && !isLoading) {
+    return (
+      <div className="chat-messages empty-state">
+        <div className="empty-state-content">
+          <div className="empty-state-icon">🏋️</div>
+          <h2 className="empty-state-title">Ready to check your form?</h2>
+          <p className="empty-state-subtitle">
+            Upload a workout video or ask a question to get started.
+          </p>
+          <div className="empty-state-chips">
+            <span className="suggestion-chip">Bench press tips</span>
+            <span className="suggestion-chip">Check my deadlift</span>
+            <span className="suggestion-chip">How's my bar path?</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="chat-messages">
       {messages.map((msg, i) => {
