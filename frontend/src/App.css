@@ -1,17 +1,17 @@
 /* ── Design tokens ── */
 :root {
-  --bg: #141416;
-  --surface: #1C1C1F;
-  --surface-raised: #232326;
-  --sidebar: #18181B;
-  --border: #2E2E32;
-  --border-subtle: #262629;
+  --bg: #F1F0ED;
+  --surface: #F8F7F4;
+  --surface-raised: #FFFFFF;
+  --sidebar: #FFFFFF;
+  --border: #E8E5DF;
+  --border-subtle: #F0EDE8;
   --accent: #2A7A4B;
   --accent-hover: #23663F;
-  --accent-subtle: rgba(42, 122, 75, 0.12);
-  --text: #E8E8EB;
-  --text-secondary: #8B8B95;
-  --text-muted: #5A5A65;
+  --accent-subtle: rgba(42, 122, 75, 0.10);
+  --text: #1A1A1A;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
   --error: #E5484D;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -56,6 +56,10 @@ body {
   letter-spacing: -0.02em;
 }
 
+.app-title-ai {
+  color: var(--accent);
+}
+
 /* ── Sidebar ── */
 .sidebar {
   display: flex;
@@ -81,7 +85,7 @@ body {
 }
 
 .sidebar-desktop::-webkit-scrollbar-thumb {
-  background: var(--text-muted);
+  background: var(--border);
   border-radius: 2px;
 }
 
@@ -184,7 +188,7 @@ body {
 }
 
 .sidebar-item:hover {
-  background: rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.04);
   color: var(--text);
 }
 
@@ -253,7 +257,7 @@ body {
   padding: 8px;
   cursor: pointer;
   color: var(--text);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .sidebar-overlay {
@@ -423,21 +427,22 @@ body {
 }
 
 .empty-state-icon {
-  font-size: 48px;
+  width: 64px;
+  height: 64px;
   margin-bottom: 16px;
 }
 
 .empty-state-title {
   font-size: 20px;
   font-weight: 700;
-  color: #1A1A1A;
+  color: var(--text);
   letter-spacing: -0.01em;
   margin-bottom: 8px;
 }
 
 .empty-state-subtitle {
   font-size: 15px;
-  color: #6B7280;
+  color: var(--text-secondary);
   line-height: 1.5;
   margin-bottom: 24px;
 }
@@ -450,20 +455,20 @@ body {
 }
 
 .suggestion-chip {
-  background: #F0F1F5;
-  border: 1px solid #E2E4E9;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
   border-radius: 20px;
   padding: 8px 16px;
   font-size: 13px;
   font-weight: 500;
-  color: #374151;
+  color: var(--text-secondary);
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
 }
 
 .suggestion-chip:hover {
-  background: #E5E7EB;
-  border-color: #D1D5DB;
+  background: var(--border);
+  border-color: var(--text-muted);
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -471,7 +476,7 @@ body {
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-  background: var(--text-muted);
+  background: var(--border);
   border-radius: 3px;
 }
 
@@ -537,19 +542,19 @@ body {
 .coach-bullet {
   padding-left: 12px;
   margin-bottom: 6px;
-  color: var(--text);
+  color: var(--text-secondary);
   position: relative;
 }
 
 .coach-numbered {
   padding-left: 12px;
   margin-bottom: 6px;
-  color: var(--text);
+  color: var(--text-secondary);
 }
 
 .coach-paragraph {
   margin-bottom: 6px;
-  color: var(--text);
+  color: var(--text-secondary);
 }
 
 .spacer {
@@ -696,7 +701,7 @@ body {
   gap: 8px;
   padding: 8px 16px;
   background: var(--surface-raised);
-  border: 1px solid #D1D5DB;
+  border: 1px solid var(--border);
   border-radius: 24px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   transition: border-color 0.15s;

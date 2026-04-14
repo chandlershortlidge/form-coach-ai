@@ -112,7 +112,7 @@ export default function ChatPanel({ messages, isLoading, loadingType, previewDat
     return (
       <div className="chat-messages empty-state">
         <div className="empty-state-content">
-          <div className="empty-state-icon">🏋️</div>
+          <img src="/final-v2-detailed.svg" alt="FormCoach AI" className="empty-state-icon" />
           <h2 className="empty-state-title">Ready to check your form?</h2>
           <p className="empty-state-subtitle">
             Upload a workout video or ask a question to get started.
