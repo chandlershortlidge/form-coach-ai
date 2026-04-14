@@ -117,11 +117,6 @@ export default function ChatPanel({ messages, isLoading, loadingType, previewDat
           <p className="empty-state-subtitle">
             Upload a workout video or ask a question to get started.
           </p>
-          <div className="empty-state-chips">
-            <span className="suggestion-chip">Bench press tips</span>
-            <span className="suggestion-chip">Check my deadlift</span>
-            <span className="suggestion-chip">How's my bar path?</span>
-          </div>
         </div>
       </div>
     );

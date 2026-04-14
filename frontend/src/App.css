@@ -48,12 +48,22 @@ body {
   min-width: 0;
 }
 
+.app-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
 .app-title {
   font-size: 24px;
   font-weight: 700;
   color: var(--text);
-  margin-bottom: 16px;
   letter-spacing: -0.02em;
+}
+
+.app-tagline {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 2px;
 }
 
 .app-title-ai {
@@ -447,28 +457,18 @@ body {
   margin-bottom: 24px;
 }
 
-.empty-state-chips {
+.empty-state-hints {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 24px;
+  margin-bottom: 12px;
 }
 
-.suggestion-chip {
-  background: var(--surface-raised);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 8px 16px;
+.empty-state-hint {
   font-size: 13px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
-}
-
-.suggestion-chip:hover {
-  background: var(--border);
-  border-color: var(--text-muted);
+  color: var(--text-muted);
+  text-align: center;
 }
 
 .chat-messages::-webkit-scrollbar {

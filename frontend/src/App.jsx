@@ -188,7 +188,10 @@ export default function App() {
         onSelectSession={handleSelectSession}
       />
       <div className="app-main">
-        <h1 className="app-title">FormCoach <span className="app-title-ai">AI</span></h1>
+        <div className="app-header">
+          <h1 className="app-title">FormCoach <span className="app-title-ai">AI</span></h1>
+          <p className="app-tagline">AI-powered analysis for your lifts</p>
+        </div>
         <div className="app-layout">
           <div className="chat-panel">
             <ChatPanel messages={messages} isLoading={isLoading} loadingType={loadingType} previewData={previewData} />

@@ -71,6 +71,10 @@ export default function InputBar({ onSendText, onSendVideo, onSendAudio, disable
 
   return (
     <div className="input-bar-wrapper">
+      <div className="empty-state-hints">
+        <p className="empty-state-hint">Drop a video, type a question, or use voice — the coach handles all three.</p>
+        <p className="empty-state-hint">Shorter clips = faster feedback.</p>
+      </div>
       {stagedVideo && (
         <div className="video-chip">
           <span className="video-chip-name">📎 {stagedVideo.name}</span>
@@ -107,7 +111,7 @@ export default function InputBar({ onSendText, onSendVideo, onSendAudio, disable
         <input
           type="text"
           className="text-input"
-          placeholder="Upload a workout video. Tip: keep videos between 10 and 15 seconds."
+          placeholder="Tip: Keep videos between 10-15 seconds"
           value={text}
           onChange={(e) => setText(e.target.value)}
           disabled={disabled}
