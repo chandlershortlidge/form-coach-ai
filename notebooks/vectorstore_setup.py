@@ -99,7 +99,7 @@ def clean_and_save_transcript(filepath_in: str, filepath_out: str) -> None:
     # Step 2: Get the raw transcript from it
     raw_transcript = data["transcript"]
     # Step 3: Clean it with GPT
-    llm = ChatOpenAI(model='gpt-5')
+    llm = ChatOpenAI(model='gpt-5.4-nano')
     # invoke LLM to clean the and edit the raw_transcript, producing cleaned_text
     response = llm.invoke(f"Edit this document {raw_transcript}. Make the transcript clean and readable by a human." 
                         "Remove all line break characters '/n'. Clean all typos. Return ONLY the transcript." 
