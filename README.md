@@ -1,4 +1,4 @@
-# Fitness Form Coach
+# FormCoach AI
 
 A multimodal AI coaching system that analyzes workout videos and user queries using an agent-orchestrated pipeline combining video understanding, retrieval-augmented generation (RAG), and conversational memory.
 
