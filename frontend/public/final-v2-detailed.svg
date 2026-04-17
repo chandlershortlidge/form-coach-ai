@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Motion-path dots -->
+  <circle cx="18" cy="27.8" r="1.2" fill="#1A1A1A"/>
+  <circle cx="24" cy="22.6" r="1.2" fill="#1A1A1A"/>
+  <circle cx="40" cy="22.6" r="1.2" fill="#1A1A1A"/>
+  <circle cx="46" cy="27.8" r="1.2" fill="#1A1A1A"/>
+  <!-- Form-check point -->
+  <circle cx="32" cy="20" r="2.2" fill="#2A7A4B"/>
+  <!-- Barbell bar -->
+  <rect x="18" y="41" width="28" height="2" rx="1" fill="#1A1A1A"/>
+  <!-- Left plates: inner large, outer small -->
+  <rect x="15" y="36" width="3" height="12" rx="1" fill="#1A1A1A"/>
+  <rect x="11" y="38" width="2.5" height="8" rx="1" fill="#1A1A1A"/>
+  <!-- Right plates: inner large, outer small -->
+  <rect x="46" y="36" width="3" height="12" rx="1" fill="#1A1A1A"/>
+  <rect x="50.5" y="38" width="2.5" height="8" rx="1" fill="#1A1A1A"/>
+</svg>

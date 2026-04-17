@@ -1,9 +1,9 @@
 
 import json
+from typing import Any
 
 
-
-def write_json(filepath_out, data):
+def write_json(filepath_out: str, data: Any) -> None:
     """Write a Python object to disk as JSON.
 
     Args:
@@ -14,7 +14,7 @@ def write_json(filepath_out, data):
         json.dump(data, f)
 
 
-def read_json(filename):
+def read_json(filename: str) -> Any:
     """Load JSON data from a file path.
 
     Args:
@@ -25,4 +25,4 @@ def read_json(filename):
     """
     with open(filename, "r") as f:
         data = json.load(f)
-    return data 
+    return data

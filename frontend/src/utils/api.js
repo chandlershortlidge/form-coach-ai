@@ -1,4 +1,16 @@
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = 'https://fitness-form-coach-t32qh37koa-ew.a.run.app';
+
+export async function fetchSessions(limit = 20) {
+  const res = await fetch(`${BASE_URL}/sessions?limit=${limit}`);
+  if (!res.ok) throw new Error(`Server error: ${res.status}`);
+  return res.json();
+}
+
+export async function fetchSession(sessionId) {
+  const res = await fetch(`${BASE_URL}/sessions/${sessionId}`);
+  if (!res.ok) throw new Error(`Server error: ${res.status}`);
+  return res.json();
+}
 
 export async function analyze({ sessionId, userQuery, userVideo, userAudio, onStatus, onPreview, onResponse }) {
   const form = new FormData();

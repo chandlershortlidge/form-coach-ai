@@ -6,3 +6,9 @@ export function getSessionId() {
   }
   return id;
 }
+
+export function resetSessionId() {
+  const id = crypto.randomUUID();
+  sessionStorage.setItem('session_id', id);
+  return id;
+}

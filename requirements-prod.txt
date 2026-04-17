@@ -1,0 +1,21 @@
+# Web Framework
+fastapi>=0.100.0
+uvicorn>=0.23.0
+python-multipart>=0.0.9
+
+# Video Processing
+opencv-python>=4.8.0
+
+# LLM & AI
+openai>=1.0.0
+langchain-core>=0.1.0
+langchain-openai>=0.0.5
+langgraph>=0.0.20
+langsmith>=0.0.60
+
+# Vector Database & Embeddings
+langchain-chroma>=0.1.0
+langchain-text-splitters>=0.0.1
+
+# API & Environment
+python-dotenv>=1.0.0

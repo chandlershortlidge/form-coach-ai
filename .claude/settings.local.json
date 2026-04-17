@@ -5,7 +5,10 @@
       "Bash(npm create:*)",
       "Bash(npm install:*)",
       "Bash(lsof -iTCP:8000 -sTCP:LISTEN)",
-      "Bash(lsof -iTCP:5173 -sTCP:LISTEN)"
+      "Bash(lsof -iTCP:5173 -sTCP:LISTEN)",
+      "Bash(python3 -c \":*)",
+      "Bash(find /Users/chandlershortlidge/Desktop/Ironhack/fitness-form-coach/frontend/src -type f \\\\\\(-name *.js -o -name *.jsx \\\\\\))",
+      "Bash(python -c \"import py_compile; py_compile.compile\\(''sessions.py'', doraise=True\\); py_compile.compile\\(''main.py'', doraise=True\\); print\\(''OK''\\)\")"
     ]
   }
 }

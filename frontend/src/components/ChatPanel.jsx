@@ -1,51 +1,10 @@
+import ReactMarkdown from 'react-markdown'; 
 import { useEffect, useRef, useState } from 'react';
 
-function parseCoachResponse(text) {
-  if (!text) return [];
-  const lines = text.split('\n');
-  const elements = [];
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    const trimmed = line.trim();
-
-    if (trimmed === '') {
-      elements.push({ type: 'spacer', key: i });
-    } else if (trimmed.startsWith('- ')) {
-      elements.push({ type: 'bullet', text: trimmed.slice(2), key: i });
-    } else if (/^\d+\)\s/.test(trimmed)) {
-      elements.push({ type: 'numbered', text: trimmed, key: i });
-    } else if (trimmed.length < 60 && !trimmed.startsWith('-') && !trimmed.includes('. ')) {
-      elements.push({ type: 'header', text: trimmed, key: i });
-    } else {
-      elements.push({ type: 'paragraph', text: trimmed, key: i });
-    }
-  }
-
-  return elements;
-}
-
 function CoachMessage({ text }) {
-  const parts = parseCoachResponse(text);
-
   return (
     <div className="coach-message">
-      {parts.map((part) => {
-        switch (part.type) {
-          case 'spacer':
-            return <div key={part.key} className="spacer" />;
-          case 'header':
-            return <div key={part.key} className="coach-header">{part.text}</div>;
-          case 'bullet':
-            return <div key={part.key} className="coach-bullet">- {part.text}</div>;
-          case 'numbered':
-            return <div key={part.key} className="coach-numbered">{part.text}</div>;
-          case 'paragraph':
-            return <div key={part.key} className="coach-paragraph">{part.text}</div>;
-          default:
-            return null;
-        }
-      })}
+      <ReactMarkdown>{text}</ReactMarkdown>
     </div>
   );
 }
@@ -136,31 +95,53 @@ function VideoLoadingIndicator({ previewData }) {
 }
 
 export default function ChatPanel({ messages, isLoading, loadingType, previewData }) {
-  const bottomRef = useRef(null);
+  const lastMsgRef = useRef(null);
+  const prevCountRef = useRef(0);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isLoading]);
+    const prevCount = prevCountRef.current;
+    prevCountRef.current = messages.length;
+
+    if (messages.length > prevCount && messages.length > 0) {
+      // A new message was added — scroll its top into view
+      lastMsgRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [messages]);
+
+  if (messages.length === 0 && !isLoading) {
+    return (
+      <div className="chat-messages empty-state">
+        <div className="empty-state-content">
+          <img src="/final-v2-detailed.svg" alt="FormCoach AI" className="empty-state-icon" />
+          <h2 className="empty-state-title">Ready to check your form?</h2>
+          <p className="empty-state-subtitle">
+            Upload a workout video or ask a question to get started.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="chat-messages">
       {messages.map((msg, i) => {
+        const isLast = i === messages.length - 1;
         if (msg.role === 'user') {
           return (
-            <div key={i} className="message-row user-row">
+            <div key={i} className="message-row user-row" ref={isLast ? lastMsgRef : null}>
               <div className="user-bubble">{msg.text}</div>
             </div>
           );
         }
         if (msg.role === 'error') {
           return (
-            <div key={i} className="message-row coach-row">
+            <div key={i} className="message-row coach-row" ref={isLast ? lastMsgRef : null}>
               <div className="error-message">{msg.text}</div>
             </div>
           );
         }
         return (
-          <div key={i} className="message-row coach-row">
+          <div key={i} className="message-row coach-row" ref={isLast ? lastMsgRef : null}>
             <CoachMessage text={msg.text} />
           </div>
         );
@@ -170,7 +151,6 @@ export default function ChatPanel({ messages, isLoading, loadingType, previewDat
           {loadingType === 'video' ? <VideoLoadingIndicator previewData={previewData} /> : <TypingIndicator />}
         </div>
       )}
-      <div ref={bottomRef} />
     </div>
   );
 }
