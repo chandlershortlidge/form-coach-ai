@@ -32,11 +32,11 @@ def print_bootstrap_results(result, df_name: str, column_name: str):
     
 
 def get_score(df, column: str):
-    """Print the mean score for the column in the dataframe"""
+    """Return the denormalized mean score for the column in the dataframe."""
     df_clean = df[column].dropna()
     df_array = df_clean.values
     score = df_array.mean() * 2
-    print(f"Score: {score}")
+    return score
 
 def do_t_test(baseline_df, new_df, column):
     baseline_score = baseline_df[column].dropna()
