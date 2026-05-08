@@ -99,7 +99,7 @@ Both services run on **Google Cloud Run**, built via Cloud Build:
 
 ## Evaluation
 
-- **LangSmith** — RAG baseline evaluated across correctness, latency (P50/P99), token usage, and cost. Eval scripts and datasets live in [llm-evals/](llm-evals/).
+- **LangSmith** — RAG baseline evaluated across correctness, latency (P50/P99), token usage, and cost. Eval scripts and datasets live in [ml/evaluation/](ml/evaluation/).
 
 ## Key Design Decisions
 
@@ -132,16 +132,21 @@ fitness-form-coach/
 │   ├── processed/                    # Cleaned transcript chunks with metadata
 │   ├── raw_workout_videos/           # Source workout videos
 │   └── transcripts/                  # Raw transcript JSON files
-├── notebooks/
-│   ├── vectorstore_setup.py          # Transcript fetching, cleaning, chunking, vectorstore helpers
-│   ├── vectorstore_setup.ipynb       # Vectorstore creation and document ingestion
-│   ├── youtube_transcripts.ipynb     # YouTube transcript fetching & cleaning
-│   ├── text_transcripts.ipynb        # PDF text processing
-│   └── test_graph.ipynb              # Graph experimentation
-├── llm-evals/                        # LangSmith evaluation scripts and datasets
-├── prompts/                          # Prompt development notes
+├── ml/
+│   ├── ingestion/                    # Transcript fetching, cleaning, chunking, vectorstore setup
+│   │   ├── vectorstore_setup.py      # Helpers used by the ingestion notebooks
+│   │   ├── vectorstore_setup.ipynb   # Vectorstore creation and document ingestion
+│   │   ├── youtube_transcripts.ipynb # YouTube transcript fetching & cleaning
+│   │   ├── text_transcripts.ipynb    # PDF text processing
+│   │   └── test_graph.ipynb          # Graph experimentation
+│   └── evaluation/                   # LangSmith eval notebooks, datasets, prompts
+│       ├── eval_functions.py
+│       ├── prompts/                  # Eval prompt versions (system, judge, reference)
+│       └── eval-data/                # Eval question sets and result CSVs
+├── tests/                            # pytest suite (sessions, video math, router)
+├── infra/
+│   └── cloudbuild.yaml               # Cloud Build pipeline
 ├── dockerfile                        # Backend container (runs backend.main:app)
-├── cloudbuild.yaml                   # Cloud Build pipeline
 ├── requirements.txt                  # Dev dependencies
 ├── requirements-prod.txt             # Production dependencies
 └── README.md
@@ -152,7 +157,7 @@ fitness-form-coach/
 ```bash
 # Backend
 pip install -r requirements.txt
-uvicorn main:app --reload
+uvicorn backend.main:app --reload
 
 # Frontend
 cd frontend
