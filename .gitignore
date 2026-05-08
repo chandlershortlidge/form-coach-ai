@@ -219,4 +219,9 @@ chroma_db/
 *.csv
 
 # Docker 
-.env.docker
+.env.dockernode_modules/
+frontend/.vite/
+chroma_dbx/
+app/sessions_data.json
+.streamlit/
+.claude/
