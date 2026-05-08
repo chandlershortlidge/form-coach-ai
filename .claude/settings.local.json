@@ -9,7 +9,10 @@
       "Bash(python3 -c \":*)",
       "Bash(find /Users/chandlershortlidge/Desktop/Ironhack/fitness-form-coach/frontend/src -type f \\\\\\(-name *.js -o -name *.jsx \\\\\\))",
       "Bash(python -c \"import py_compile; py_compile.compile\\(''sessions.py'', doraise=True\\); py_compile.compile\\(''main.py'', doraise=True\\); print\\(''OK''\\)\")",
-      "mcp__ide__executeCode"
+      "mcp__ide__executeCode",
+      "Bash(git *)",
+      "Bash(pytest tests/)",
+      "Bash(python -c \"from backend.main import app; print\\('import ok:', app\\)\")"
     ]
   }
 }

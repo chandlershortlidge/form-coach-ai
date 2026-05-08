@@ -225,3 +225,4 @@ chroma_dbx/
 backend/sessions_data.json
 .streamlit/
 .claude/
+node_modules/
