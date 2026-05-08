@@ -81,7 +81,7 @@ Sessions are persisted via [backend/sessions.py](backend/sessions.py), which cur
 
 Both services run on **Google Cloud Run**, built via Cloud Build:
 
-- **Backend** — [dockerfile](dockerfile) + [cloudbuild.yaml](cloudbuild.yaml) build the FastAPI image and push to Artifact Registry (`europe-west1`)
+- **Backend** — [dockerfile](dockerfile) + [infra/cloudbuild.yaml](infra/cloudbuild.yaml) build the FastAPI image and push to Artifact Registry (`europe-west1`)
 - **Frontend** — [frontend/dockerfile](frontend/dockerfile) builds the Vite bundle and serves it with nginx
 - The persisted ChromaDB index is bundled into the backend image so retrieval works without any external vector DB
 
