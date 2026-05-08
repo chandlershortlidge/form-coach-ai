@@ -12,20 +12,12 @@ import time
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__) 
 
-if __package__:
-    from .graph import (
-        app as graph_app, transcribe_audio,
-        video_encoder_node, video_classification_node,
-        vector_db_node, response_generator,
-    )
-    from .sessions import create_session, get_session, update_session, list_sessions
-else:
-    from graph import (
-        app as graph_app, transcribe_audio,
-        video_encoder_node, video_classification_node,
-        vector_db_node, response_generator,
-    )
-    from sessions import create_session, get_session, update_session, list_sessions
+from .graph import (
+    app as graph_app, transcribe_audio,
+    video_encoder_node, video_classification_node,
+    vector_db_node, response_generator,
+)
+from .sessions import create_session, get_session, update_session, list_sessions
 
 app = FastAPI()
 
