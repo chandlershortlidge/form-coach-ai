@@ -222,6 +222,6 @@ chroma_db/
 .env.dockernode_modules/
 frontend/.vite/
 chroma_dbx/
-app/sessions_data.json
+backend/sessions_data.json
 .streamlit/
 .claude/

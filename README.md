@@ -10,7 +10,7 @@ Responses are grounded in a curated knowledge base of fitness experts (Jeff Nipp
 
 ## How It Works
 
-The entire pipeline is orchestrated as a **LangGraph state machine** ([app/graph.py](app/graph.py)). A conditional router at the entry point inspects the input and directs it down one of three paths:
+The entire pipeline is orchestrated as a **LangGraph state machine** ([backend/graph.py](backend/graph.py)). A conditional router at the entry point inspects the input and directs it down one of three paths:
 
 ```
                     ┌─────────────────────┐
@@ -48,7 +48,7 @@ The entire pipeline is orchestrated as a **LangGraph state machine** ([app/graph
 ```
 
 ### Video Path (video attached)
-1. **Video Encoder** — [app/video_processing.py](app/video_processing.py) extracts frames from the workout video using OpenCV and base64-encodes them
+1. **Video Encoder** — [backend/video_processing.py](backend/video_processing.py) extracts frames from the workout video using OpenCV and base64-encodes them
 2. **Video Classification** — GPT-5.4-nano identifies the exercise type and key body checkpoints from a representative frame
 3. **Vector DB** — Classification keywords + user query both drive similarity searches against ChromaDB; results are deduplicated
 4. **Response Generator** — All frames + retrieved expert context are passed to GPT-5.4 for multi-frame form analysis with conversation history. The full response is streamed to the user, then a lightweight GPT-5.4-nano summarizer condenses it into a short memory entry before it is written to chat history — this keeps follow-up context small and cheap without losing the key facts.
@@ -64,14 +64,14 @@ The path is selected by `route_query()`: if a video is attached it always takes 
 
 ## Backend API
 
-The FastAPI app ([app/main.py](app/main.py)) exposes:
+The FastAPI app ([backend/main.py](backend/main.py)) exposes:
 
 - `GET /` — health check
 - `GET /sessions` — list recent sessions for the sidebar
 - `GET /sessions/{session_id}` — fetch a single session record
 - `POST /analyze` — multipart endpoint accepting `user_query`, `user_video`, and/or `user_audio`. Returns a **Server-Sent Events** stream so the frontend can show progress (`Watching your video...`, classification preview, final response) as each graph node completes. Audio uploads are transcribed with the OpenAI Whisper API before being passed to the graph.
 
-Sessions are persisted via [app/sessions.py](app/sessions.py), which currently uses a local JSON store with a stable interface (`create` / `get` / `list` / `update`) designed to be swapped for Firestore without changing call sites.
+Sessions are persisted via [backend/sessions.py](backend/sessions.py), which currently uses a local JSON store with a stable interface (`create` / `get` / `list` / `update`) designed to be swapped for Firestore without changing call sites.
 
 ## Frontend
 
@@ -116,7 +116,7 @@ Both services run on **Google Cloud Run**, built via Cloud Build:
 
 ```
 fitness-form-coach/
-├── app/                              # FastAPI backend
+├── backend/                          # FastAPI backend
 │   ├── main.py                       # API routes, SSE streaming, audio transcription
 │   ├── graph.py                      # LangGraph state machine: nodes, routing, execution
 │   ├── video_processing.py           # Video frame extraction + base64 encoding
@@ -140,8 +140,7 @@ fitness-form-coach/
 │   └── test_graph.ipynb              # Graph experimentation
 ├── llm-evals/                        # LangSmith evaluation scripts and datasets
 ├── prompts/                          # Prompt development notes
-├── main.py                           # Uvicorn entrypoint (re-exports app.main:app)
-├── dockerfile                        # Backend container
+├── dockerfile                        # Backend container (runs backend.main:app)
 ├── cloudbuild.yaml                   # Cloud Build pipeline
 ├── requirements.txt                  # Dev dependencies
 ├── requirements-prod.txt             # Production dependencies

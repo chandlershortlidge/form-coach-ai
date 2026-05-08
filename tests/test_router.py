@@ -11,8 +11,8 @@ def graph_module(tmp_path, monkeypatch):
     monkeypatch.setenv("CHROMA_DIR", str(tmp_path / "chroma"))
     monkeypatch.delenv("LANGSMITH_API_KEY", raising=False)
 
-    sys.modules.pop("app.graph", None)
-    from app import graph
+    sys.modules.pop("backend.graph", None)
+    from backend import graph
     return graph
 
 

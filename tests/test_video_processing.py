@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import pytest
 
-from app import video_processing
+from backend import video_processing
 
 
 def _write_test_video(path, fps, total_frames, size=(64, 64)):

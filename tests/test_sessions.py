@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from app import sessions
+from backend import sessions
 
 
 @pytest.fixture
